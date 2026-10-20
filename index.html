@@ -1,1586 +1,705 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tarun R — Creative Developer &amp; AI Systems Engineer</title>
-  <meta name="description" content="Portfolio of Tarun R, Creative Developer &amp; AI Systems Engineer specializing in intelligent products, full-stack systems, and experimental digital experiences.">
-  <meta name="keywords" content="Tarun R, Creative Developer, AI Engineer, Full-Stack Developer, Portfolio, GSAP, Web Design, Interactive Workspace">
-  <meta name="author" content="Tarun R">
+  <title>TARUN R. — CREATIVE DEVELOPER &amp; AI SYSTEMS ENGINEER</title>
+  <meta name="description" content="Personal developer portfolio of Tarun R. Experimental Y2K × Monochrome Brutalism × Retro-Futurism × Chrome 3D × Editorial Minimalism.">
+  <meta name="keywords" content="Tarun R, Creative Developer, Three.js, GSAP, AI Engineer, Full-Stack Developer, Retro-Futurism, Y2K Portfolio">
+  <meta name="author" content="Tarun R.">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Tarun R — Creative Developer &amp; AI Systems Engineer">
-  <meta property="og:description" content="An Adobe Illustrator-inspired interactive portfolio showcasing AI systems, full-stack applications, and creative engineering.">
+  <meta property="og:title" content="TARUN R. — CREATIVE DEVELOPER &amp; AI SYSTEMS ENGINEER">
+  <meta property="og:description" content="Experimental Y2K × Monochrome Brutalism × Chrome 3D developer portfolio.">
   <meta property="og:type" content="website">
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Silkscreen (Pixel), Instrument Serif (Editorial Italic), Space Grotesk (Brutalist Sans), JetBrains Mono (Technical), Syne (Bold Display) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- GSAP & ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="is-loading" data-tool="select">
+<body class="theme-dark" data-audio="off">
 
   <!-- ACCESSIBILITY SKIP LINK -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <a href="#hero" class="skip-link sr-only">Skip to main content</a>
 
-  <!-- CUSTOM INTERACTIVE CURSOR -->
+  <!-- SUBTLE ANALOG NOISE GRAIN OVERLAY -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- MINIMAL CUSTOM CURSOR -->
   <div id="custom-cursor" class="custom-cursor" aria-hidden="true">
-    <div class="cursor-pointer">
-      <!-- Illustrator Style Arrow Pointer -->
-      <svg class="cursor-svg arrow-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M3 3L10.07 20.97L12.58 13.11L20.44 10.6L3 3Z" fill="#F15A29" stroke="#171717" stroke-width="1.5" stroke-linejoin="round"/>
-      </svg>
-      <svg class="cursor-svg crosshair-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="9" stroke="#F15A29" stroke-width="1.5" stroke-dasharray="2 2"/>
-        <line x1="12" y1="3" x2="12" y2="21" stroke="#F15A29" stroke-width="1.5"/>
-        <line x1="3" y1="12" x2="21" y2="12" stroke="#F15A29" stroke-width="1.5"/>
-      </svg>
-      <svg class="cursor-svg pen-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M12 19L19 12L22 15L15 22L12 19Z" fill="#171717" stroke="#F15A29" stroke-width="1.5"/>
-        <path d="M18 13L9 22L2 22L2 15L11 6" stroke="#F15A29" stroke-width="1.5" stroke-linejoin="round"/>
-        <circle cx="4" cy="20" r="1.5" fill="#F15A29"/>
-      </svg>
-    </div>
-    <div class="cursor-tag">
-      <span class="cursor-tag-coords">X: <span id="cur-x">0</span> Y: <span id="cur-y">0</span></span>
-      <span class="cursor-tag-label" id="cur-label">SELECT</span>
-    </div>
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+    <div class="cursor-coords" id="cursor-coords">00 // 00</div>
   </div>
 
-  <!-- INTRO / LOADING OVERLAY -->
-  <div id="intro-loader" class="intro-loader" role="dialog" aria-modal="true" aria-label="Portfolio Loading Screen">
-    <div class="loader-bg"></div>
-    <div class="loader-canvas">
-      <!-- Animated SVG Vector Path -->
-      <svg class="loader-vector-svg" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <linearGradient id="vector-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#F15A29"/>
-            <stop offset="100%" stop-color="#FF8A50"/>
-          </linearGradient>
-        </defs>
-        <!-- Grid guidelines -->
-        <g class="loader-grid" opacity="0.15">
-          <line x1="100" y1="150" x2="900" y2="150" stroke="#F15A29" stroke-dasharray="4 4" />
-          <line x1="100" y1="300" x2="900" y2="300" stroke="#F15A29" stroke-dasharray="4 4" />
-          <line x1="100" y1="450" x2="900" y2="450" stroke="#F15A29" stroke-dasharray="4 4" />
-          <line x1="250" y1="50" x2="250" y2="550" stroke="#F15A29" stroke-dasharray="4 4" />
-          <line x1="500" y1="50" x2="500" y2="550" stroke="#F15A29" stroke-dasharray="4 4" />
-          <line x1="750" y1="50" x2="750" y2="550" stroke="#F15A29" stroke-dasharray="4 4" />
-        </g>
-        <!-- Vector Bezier Curve -->
-        <path id="loader-bezier" class="loader-bezier" d="M 150 450 C 280 150, 420 500, 580 220 S 780 480, 850 200" fill="none" stroke="url(#vector-grad)" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Anchor points with tangent handles -->
-        <g id="loader-anchors" class="loader-anchors" opacity="0">
-          <line x1="280" y1="150" x2="420" y2="500" stroke="#F15A29" stroke-width="1" stroke-dasharray="3 3"/>
-          <circle cx="280" cy="150" r="4" fill="#171717" stroke="#F15A29" stroke-width="1.5"/>
-          <circle cx="420" cy="500" r="4" fill="#171717" stroke="#F15A29" stroke-width="1.5"/>
-          <rect x="144" y="444" width="12" height="12" fill="#F15A29" stroke="#171717" stroke-width="1.5"/>
-          <rect x="574" y="214" width="12" height="12" fill="#F15A29" stroke="#171717" stroke-width="1.5"/>
-          <rect x="844" y="194" width="12" height="12" fill="#F15A29" stroke="#171717" stroke-width="1.5"/>
-        </g>
-      </svg>
-
-      <!-- Selection Bounding Box Container -->
-      <div id="loader-selection-box" class="loader-selection-box">
-        <div class="handle handle-tl"></div>
-        <div class="handle handle-tc"></div>
-        <div class="handle handle-tr"></div>
-        <div class="handle handle-ml"></div>
-        <div class="handle handle-mr"></div>
-        <div class="handle handle-bl"></div>
-        <div class="handle handle-bc"></div>
-        <div class="handle handle-br"></div>
-        <div class="selection-dimension-badge">W: 840px &times; H: 140px [0°]</div>
-        <div class="loader-text-wrapper">
-          <span class="loader-text" id="loader-text">DESIGNING IDEAS. ENGINEERING EXPERIENCES.</span>
-        </div>
-      </div>
-
-      <div class="loader-status">
-        <span class="loader-prompt"><span class="dot-live"></span> INITIALIZING VECTOR WORKSPACE...</span>
-        <button id="skip-intro-btn" class="skip-intro-btn" type="button" aria-label="Skip introduction animation">
-          Skip Intro [ESC] &rarr;
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- APPLICATION TOP STATUS BAR (Illustrator Menu Bar) -->
-  <header class="app-menubar" role="banner">
-    <div class="menubar-left">
-      <!-- App Badge -->
-      <a href="#hero" class="app-logo-badge" title="Creative Developer Workspace">
-        <span class="badge-box">Cd</span>
-        <span class="badge-name">Portfolio.ai</span>
+  <!-- GLOBAL HUD / TOP NAVIGATION BAR -->
+  <header class="global-header" id="global-header">
+    <div class="header-left">
+      <a href="#hero" class="brand-badge" aria-label="Tarun R Home">
+        <span class="brand-monogram">TR</span>
+        <span class="brand-slash">//</span>
+        <span class="brand-title">ARCHIVE 2026</span>
       </a>
-      <span class="menu-divider"></span>
-      <!-- App Menu Strip -->
-      <nav class="app-menu-strip" aria-label="Application Menu">
-        <div class="menu-item-dropdown">
-          <button class="menu-item-btn" type="button">File <i data-lucide="chevron-down"></i></button>
-          <div class="dropdown-pane">
-            <a href="assets/resume.pdf" target="_blank" download class="dropdown-link"><i data-lucide="download"></i> Download Resume (PDF)</a>
-            <button type="button" class="dropdown-link" id="action-reset-view"><i data-lucide="maximize-2"></i> Reset Artboard View</button>
-            <button type="button" class="dropdown-link" id="action-replay-intro"><i data-lucide="play"></i> Replay Loading Experience</button>
-            <hr class="dropdown-hr">
-            <span class="dropdown-meta">Document Mode: RGB / 60 FPS</span>
-          </div>
-        </div>
-        <div class="menu-item-dropdown">
-          <button class="menu-item-btn" type="button">View <i data-lucide="chevron-down"></i></button>
-          <div class="dropdown-pane">
-            <button type="button" class="dropdown-link active-opt" id="toggle-grid-btn"><i data-lucide="grid"></i> Show Artboard Grid</button>
-            <button type="button" class="dropdown-link active-opt" id="toggle-guides-btn"><i data-lucide="ruler"></i> Show Dimension Guides</button>
-            <button type="button" class="dropdown-link" id="toggle-sound-btn"><i data-lucide="volume-2"></i> Sound UI: <span id="sound-state-label">Off</span></button>
-          </div>
-        </div>
-        <div class="menu-item-dropdown">
-          <button class="menu-item-btn" type="button">Window <i data-lucide="chevron-down"></i></button>
-          <div class="dropdown-pane">
-            <button type="button" class="dropdown-link" id="toggle-layers-window"><i data-lucide="layers"></i> Layers Panel (F7)</button>
-            <button type="button" class="dropdown-link" id="toggle-props-window"><i data-lucide="sliders"></i> Transform Inspector</button>
-          </div>
-        </div>
-      </nav>
-    </div>
-
-    <!-- Live Document Meta / Status Center -->
-    <div class="menubar-center">
-      <div class="artboard-indicator">
-        <span class="artboard-tag">ARTBOARD 1</span>
-        <span class="artboard-dims">1920 &times; 1080 px</span>
-        <span class="zoom-tag" id="zoom-badge">100%</span>
+      <div class="live-telemetry header-telemetry hide-mobile">
+        <span class="pulse-indicator"></span>
+        <span class="telemetry-text">SYS.ONLINE [LAT 13.08°N / LONG 80.27°E]</span>
       </div>
     </div>
 
-    <!-- Right Controls: Workspace Navigation & CTA -->
-    <div class="menubar-right">
-      <nav class="desktop-nav" aria-label="Portfolio Sections">
-        <a href="#hero" class="nav-item active" data-section="hero">
-          <i data-lucide="home" class="nav-icon"></i>
-          <span>Home</span>
-        </a>
-        <a href="#about" class="nav-item" data-section="about">About</a>
-        <a href="#projects" class="nav-item" data-section="projects">Projects</a>
-        <a href="#skills" class="nav-item" data-section="skills">Skills</a>
-        <a href="#experience" class="nav-item" data-section="experience">Timeline</a>
-        <a href="#contact" class="nav-item" data-section="contact">Contact</a>
-      </nav>
-
-      <!-- Quick Contact CTA -->
-      <a href="#contact" class="btn-top-cta">
-        <span>Get in Touch</span>
-        <span class="dot-status"></span>
+    <nav class="nav-links" aria-label="Main Navigation">
+      <a href="#work" class="nav-item magnetic" data-magnetic>
+        <span class="nav-num">01</span>
+        <span class="nav-label">WORK</span>
       </a>
+      <a href="#about" class="nav-item magnetic" data-magnetic>
+        <span class="nav-num">02</span>
+        <span class="nav-label">ABOUT</span>
+      </a>
+      <a href="#contact" class="nav-item magnetic" data-magnetic>
+        <span class="nav-num">03</span>
+        <span class="nav-label">CONTACT</span>
+      </a>
+    </nav>
 
-      <!-- Mobile Hamburger Toggle -->
-      <button id="mobile-menu-toggle" class="mobile-menu-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+    <div class="header-right">
+      <button id="audio-toggle" class="hud-btn magnetic" data-magnetic aria-label="Toggle ambient retro audio" title="Toggle Sound">
+        <span class="btn-icon">♬</span>
+        <span class="btn-text">AUDIO: OFF</span>
+      </button>
+      <button id="theme-toggle" class="hud-btn theme-btn magnetic" data-magnetic aria-label="Toggle inverted monochrome theme" title="Toggle Invert Mode">
+        <span class="btn-icon">◐</span>
+        <span class="btn-text">INVERT</span>
       </button>
     </div>
   </header>
 
-  <!-- MOBILE NAVIGATION DRAWER -->
-  <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
-    <div class="drawer-header">
-      <div class="app-logo-badge">
-        <span class="badge-box">Cd</span>
-        <span class="badge-name">Portfolio.ai</span>
-      </div>
-      <button id="mobile-drawer-close" class="mobile-drawer-close" type="button" aria-label="Close navigation menu">
-        <i data-lucide="x"></i>
-      </button>
-    </div>
-    <div class="drawer-artboard-meta">
-      <span>WORKSPACE: CREATIVE DEV</span>
-      <span>GPU ACCELERATED</span>
-    </div>
-    <nav class="mobile-nav-links" aria-label="Mobile Navigation">
-      <a href="#hero" class="mobile-nav-link" data-num="01"><i data-lucide="home"></i> Home</a>
-      <a href="#about" class="mobile-nav-link" data-num="02"><i data-lucide="user"></i> About Me</a>
-      <a href="#projects" class="mobile-nav-link" data-num="03"><i data-lucide="folder-git-2"></i> Selected Works</a>
-      <a href="#skills" class="mobile-nav-link" data-num="04"><i data-lucide="cpu"></i> Creative Toolkit</a>
-      <a href="#experience" class="mobile-nav-link" data-num="05"><i data-lucide="calendar"></i> Experience</a>
-      <a href="#contact" class="mobile-nav-link" data-num="06"><i data-lucide="send"></i> Let's Connect</a>
-    </nav>
-    <div class="drawer-footer">
-      <a href="assets/resume.pdf" target="_blank" download class="btn-primary full-width">
-        <i data-lucide="file-text"></i> Download Resume
-      </a>
-      <div class="drawer-socials">
-        <a href="https://github.com/TRB-89" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        </a>
-        <a href="https://www.linkedin.com/in/tarun-r-127503384/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-        </a>
-        <a href="mailto:tarunbanurekha@gmail.com" aria-label="Email"><i data-lucide="mail"></i></a>
-      </div>
-    </div>
-  </div>
+  <!-- CORNER TECHNICAL BRACKETS -->
+  <div class="tech-crosshair ch-tl" aria-hidden="true">⌜ 001 // TR-SYS ⌟</div>
+  <div class="tech-crosshair ch-tr" aria-hidden="true">⌜ 60FPS // CHROME ⌟</div>
+  <div class="tech-crosshair ch-bl" aria-hidden="true">⌞ 2026.04 // STBL ⌟</div>
+  <div class="tech-crosshair ch-br" aria-hidden="true">⌞ READY // SCROLL ⌟</div>
 
-  <!-- FLOATING LEFT TOOLBAR (Adobe Illustrator Inspired) -->
-  <aside class="floating-toolbar" role="toolbar" aria-label="Design Tools">
-    <div class="toolbar-drag-handle" title="Creative Tools Palette">
-      <span class="dots">:::</span>
-      <span class="tool-palette-title">TOOLS</span>
-    </div>
-    <div class="tools-list">
-      <!-- 1. Selection Tool (V) -->
-      <button class="tool-btn active" data-tool="select" type="button" aria-label="Selection Tool (V)" data-tooltip="Selection Tool (V)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M4 2L16 14L10 15L7 21L4 2Z"/>
+  <!-- MAIN SCROLL CONTAINER -->
+  <main id="main-content">
+
+    <!-- ============================================================== -->
+    <!-- SECTION 1: HERO — FULLSCREEN INTERACTIVE SCENE                -->
+    <!-- ============================================================== -->
+    <section class="section-hero" id="hero">
+      
+      <!-- BACKGROUND OVERSIZED HALFTONE STARS (TOP-LEFT & BOTTOM-RIGHT) -->
+      <div class="halftone-star star-top-left" aria-hidden="true">
+        <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="ht-pattern-1" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="8" cy="8" r="4.5" fill="#F5F5F5"/>
+            </pattern>
+            <mask id="ht-star-mask-1">
+              <!-- 4-point retro star shape -->
+              <path d="M300 0 C300 160 300 160 460 300 C300 300 300 300 300 600 C300 440 300 440 140 300 C300 300 300 300 300 0 Z" fill="#FFFFFF"/>
+            </mask>
+          </defs>
+          <rect width="600" height="600" fill="url(#ht-pattern-1)" mask="url(#ht-star-mask-1)"/>
+          <path d="M300 20 L300 580 M20 300 L580 300" stroke="#F5F5F5" stroke-width="1" stroke-dasharray="3 3" opacity="0.3"/>
         </svg>
-      </button>
+      </div>
 
-      <!-- 2. Direct Select / Anchor Tool (A) -->
-      <button class="tool-btn" data-tool="direct" type="button" aria-label="Direct Selection Tool (A)" data-tooltip="Direct Selection (A)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 2L16 14L10 15L7 21L4 2Z"/>
+      <div class="halftone-star star-bottom-right" aria-hidden="true">
+        <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="ht-pattern-2" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="8" cy="8" r="4" fill="#F5F5F5"/>
+            </pattern>
+            <mask id="ht-star-mask-2">
+              <path d="M300 0 C300 160 300 160 460 300 C300 300 300 300 300 600 C300 440 300 440 140 300 C300 300 300 300 300 0 Z" fill="#FFFFFF"/>
+            </mask>
+          </defs>
+          <rect width="600" height="600" fill="url(#ht-pattern-2)" mask="url(#ht-star-mask-2)"/>
+          <path d="M300 20 L300 580 M20 300 L580 300" stroke="#F5F5F5" stroke-width="1" stroke-dasharray="3 3" opacity="0.3"/>
         </svg>
-      </button>
-
-      <!-- 3. Pen Tool (P) - interactive vector draw -->
-      <button class="tool-btn" data-tool="pen" type="button" aria-label="Pen Tool (P)" data-tooltip="Pen Tool (P) — Click canvas to draw">
-        <i data-lucide="pen-tool"></i>
-      </button>
-
-      <!-- 4. Type Tool (T) -->
-      <button class="tool-btn" data-tool="type" type="button" aria-label="Type Tool (T)" data-tooltip="Type Tool (T) — Inspect Typography">
-        <i data-lucide="type"></i>
-      </button>
-
-      <!-- 5. Shape Tool (M) -->
-      <button class="tool-btn" data-tool="shape" type="button" aria-label="Rectangle Tool (M)" data-tooltip="Shape Tool (M) — Bounding Boxes">
-        <i data-lucide="square"></i>
-      </button>
-
-      <!-- 6. Code Inspect Tool (C) -->
-      <button class="tool-btn" data-tool="code" type="button" aria-label="Code Inspector (C)" data-tooltip="Code Symbol (C) — View Source Specs">
-        <i data-lucide="code-2"></i>
-      </button>
-
-      <div class="toolbar-separator"></div>
-
-      <!-- 7. Layers (F7) -->
-      <button class="tool-btn" id="toolbar-layers-btn" type="button" aria-label="Layers Palette (F7)" data-tooltip="Layers Palette (F7)">
-        <i data-lucide="layers"></i>
-      </button>
-
-      <!-- 8. Grid Toggle -->
-      <button class="tool-btn" id="toolbar-grid-btn" type="button" aria-label="Toggle Vector Grid" data-tooltip="Toggle Artboard Grid">
-        <i data-lucide="grid-3x3"></i>
-      </button>
-    </div>
-
-    <!-- Active Swatches -->
-    <div class="toolbar-swatches" title="Active Fill & Stroke">
-      <div class="swatch swatch-fill" title="Fill: #F15A29"></div>
-      <div class="swatch swatch-stroke" title="Stroke: #171717 1.5pt"></div>
-    </div>
-  </aside>
-
-  <!-- FLOATING RIGHT PROPERTIES / TRANSFORM INSPECTOR -->
-  <aside id="floating-inspector" class="floating-inspector" aria-label="Properties Inspector">
-    <div class="inspector-header">
-      <div class="inspector-title"><i data-lucide="sliders"></i> <span>TRANSFORM & PROPERTIES</span></div>
-      <button class="inspector-minimize" id="inspector-close-btn" type="button" aria-label="Collapse panel">&minus;</button>
-    </div>
-    <div class="inspector-body">
-      <div class="prop-group">
-        <span class="prop-label">CURRENT ELEMENT</span>
-        <div class="prop-value highlight-val" id="insp-element">Hero.Artboard</div>
       </div>
-      <div class="prop-row">
-        <div class="prop-col">
-          <span class="prop-label">X</span>
-          <span class="prop-val" id="insp-x">0 px</span>
-        </div>
-        <div class="prop-col">
-          <span class="prop-label">Y</span>
-          <span class="prop-val" id="insp-y">0 px</span>
-        </div>
-      </div>
-      <div class="prop-row">
-        <div class="prop-col">
-          <span class="prop-label">W</span>
-          <span class="prop-val" id="insp-w">1920 px</span>
-        </div>
-        <div class="prop-col">
-          <span class="prop-label">H</span>
-          <span class="prop-val" id="insp-h">1080 px</span>
-        </div>
-      </div>
-      <div class="prop-row">
-        <div class="prop-col">
-          <span class="prop-label">STROKE</span>
-          <span class="prop-val" id="insp-stroke">1.5pt #F15A29</span>
-        </div>
-        <div class="prop-col">
-          <span class="prop-label">OPACITY</span>
-          <span class="prop-val">100%</span>
-        </div>
-      </div>
-      <div class="prop-group">
-        <span class="prop-label">ACTIVE LAYER</span>
-        <span class="prop-badge"><span class="layer-dot"></span> Layer 1: Foreground Artwork</span>
-      </div>
-    </div>
-  </aside>
 
-  <!-- FLOATING LAYERS WINDOW (Toggleable) -->
-  <div id="layers-window" class="layers-window" aria-label="Layers Palette" hidden>
-    <div class="layers-header">
-      <span><i data-lucide="layers" class="mini-icon"></i> LAYERS</span>
-      <button id="layers-close-btn" type="button" class="layers-close" aria-label="Close layers">&times;</button>
-    </div>
-    <div class="layers-list">
-      <div class="layer-item active" data-target="#hero">
-        <button class="layer-eye" title="Toggle Visibility"><i data-lucide="eye"></i></button>
-        <span class="layer-color-stripe" style="background:#F15A29;"></span>
-        <span class="layer-name">&lt;Artboard: Hero Canvas&gt;</span>
-      </div>
-      <div class="layer-item" data-target="#about">
-        <button class="layer-eye" title="Toggle Visibility"><i data-lucide="eye"></i></button>
-        <span class="layer-color-stripe" style="background:#38BDF8;"></span>
-        <span class="layer-name">&lt;Group: Behind The Code&gt;</span>
-      </div>
-      <div class="layer-item" data-target="#projects">
-        <button class="layer-eye" title="Toggle Visibility"><i data-lucide="eye"></i></button>
-        <span class="layer-color-stripe" style="background:#10B981;"></span>
-        <span class="layer-name">&lt;Group: Selected Work (01-04)&gt;</span>
-      </div>
-      <div class="layer-item" data-target="#skills">
-        <button class="layer-eye" title="Toggle Visibility"><i data-lucide="eye"></i></button>
-        <span class="layer-color-stripe" style="background:#EC4899;"></span>
-        <span class="layer-name">&lt;Symbols: Creative Toolkit&gt;</span>
-      </div>
-      <div class="layer-item" data-target="#experience">
-        <button class="layer-eye" title="Toggle Visibility"><i data-lucide="eye"></i></button>
-        <span class="layer-color-stripe" style="background:#F59E0B;"></span>
-        <span class="layer-name">&lt;Path: Experience Timeline&gt;</span>
-      </div>
-      <div class="layer-item" data-target="#contact">
-        <button class="layer-eye" title="Toggle Visibility"><i data-lucide="eye"></i></button>
-        <span class="layer-color-stripe" style="background:#8B5CF6;"></span>
-        <span class="layer-name">&lt;Group: Contact & Outro&gt;</span>
-      </div>
-    </div>
-    <div class="layers-footer">
-      <span class="layers-count">6 Artboard Groups</span>
-      <button type="button" class="btn-mini" id="layers-expand-all">Lock All</button>
-    </div>
-  </div>
-
-  <!-- INTERACTIVE PEN TOOL DRAWING CANVAS (Active in Pen Mode) -->
-  <canvas id="vector-pen-canvas" class="vector-pen-canvas" aria-hidden="true"></canvas>
-
-  <!-- RULERS (Top & Left Illustrator Guide Bars) -->
-  <div class="app-ruler ruler-top" aria-hidden="true">
-    <div class="ruler-ticks" id="ruler-top-ticks"></div>
-  </div>
-  <div class="app-ruler ruler-left" aria-hidden="true">
-    <div class="ruler-ticks" id="ruler-left-ticks"></div>
-  </div>
-
-  <!-- ========================================== -->
-  <!-- MAIN WORKSPACE CONTENT                     -->
-  <!-- ========================================== -->
-  <main id="main-content" class="workspace-viewport">
-
-    <!-- 01. HERO SECTION -->
-    <section id="hero" class="hero-section" aria-label="Hero Section — Creative Developer">
-      <!-- Giant Dark Background Decorative Typography -->
-      <div class="hero-bg-text-wrap" aria-hidden="true">
-        <div class="hero-bg-text" id="hero-bg-marquee">
-          <span>PORTFOLIO // SYSTEM ARCHITECT // AI RESEARCH // GRAPHIC EDITORIAL // </span>
-          <span>PORTFOLIO // SYSTEM ARCHITECT // AI RESEARCH // GRAPHIC EDITORIAL // </span>
+      <!-- TECHNICAL BACKGROUND HUD GRID & LINES -->
+      <div class="hero-tech-grid" aria-hidden="true">
+        <div class="tech-line line-horizontal-top"></div>
+        <div class="tech-line line-horizontal-bottom"></div>
+        <div class="tech-line line-vertical-center"></div>
+        <div class="tech-coordinate-strip top-strip">
+          <span>COORDINATES // 13.0827° N, 80.2707° E</span>
+          <span class="strip-divider">+</span>
+          <span>ELEVATION // 14.2M</span>
+          <span class="strip-divider">+</span>
+          <span>OPTICAL CHROME RENDERING ENGINE</span>
         </div>
       </div>
 
-      <!-- Vector Blueprint Grid Overlay -->
-      <div class="vector-grid-overlay" id="vector-grid"></div>
+      <!-- THREE.JS 3D HERO CANVAS (TRANSPARENT CHROME DICE + PARTICLES) -->
+      <div class="hero-canvas-container" id="hero-canvas-container">
+        <canvas id="hero-3d-canvas" aria-label="Interactive 3D Chrome Glass Dice"></canvas>
+      </div>
 
-      <!-- Main Artboard Frame -->
-      <div class="hero-artboard-frame">
-        <!-- Artboard Metadata & Crop Marks -->
-        <div class="artboard-crop crop-tl"></div>
-        <div class="artboard-crop crop-tr"></div>
-        <div class="artboard-crop crop-bl"></div>
-        <div class="artboard-crop crop-br"></div>
-        
-        <div class="artboard-tag-header">
-          <div class="tag-left">
-            <span class="badge-accent">ARTBOARD: 01</span>
-            <span class="badge-dim">DEV_CANVAS_V2.6.AI</span>
+      <!-- MASSIVE HERO TYPOGRAPHY: tarun [3D OBJECT] r. -->
+      <div class="hero-content">
+        <div class="hero-label-top">
+          <span class="pixel-tag">[ PORTFOLIO 2026 ]</span>
+          <span class="sep">//</span>
+          <span class="mono-meta">CREATIVE DEVELOPER &amp; AI SYSTEMS ENGINEER</span>
+        </div>
+
+        <div class="hero-name-track" aria-label="tarun r.">
+          <span class="hero-word hero-first split-char">tarun</span>
+          <div class="hero-dice-spacer" aria-hidden="true"></div>
+          <span class="hero-word hero-last split-char">r.</span>
+        </div>
+
+        <div class="hero-sub-bar">
+          <div class="sub-col sub-left">
+            <span class="sub-mono-title">SPECIALIZATION</span>
+            <p class="sub-mono-desc">Artificial Intelligence × Full-Stack Systems × 3D Spatial Experiences</p>
           </div>
-          <div class="tag-right">
-            <span class="coord-indicator"><i data-lucide="crosshair"></i> ORIGIN: [0, 0]</span>
-            <span class="status-indicator"><span class="dot-live"></span> READY FOR INTERACTION</span>
+          <div class="sub-col sub-center hide-mobile">
+            <span class="sub-mono-title">PHILOSOPHY</span>
+            <p class="sub-mono-desc">Where brutalist minimalism converges with intelligent autonomous engineering.</p>
           </div>
-        </div>
-
-        <!-- Hero Content Layer -->
-        <div class="hero-content">
-          <!-- Small Technical Labels -->
-          <div class="hero-meta-labels">
-            <span class="meta-pill"><i data-lucide="terminal"></i> SOFTWARE ENGINEERING</span>
-            <span class="meta-pill"><i data-lucide="cpu"></i> AI & FULL-STACK DEVELOPMENT</span>
-            <span class="meta-pill"><i data-lucide="sparkles"></i> CREATING DIGITAL EXPERIENCES</span>
-          </div>
-
-          <!-- Main Headline with Oversized Typography -->
-          <div class="hero-headline-wrap">
-            <h1 class="hero-headline">
-              <span class="line line-1" id="hero-title-creative">
-                <span class="word-char">C</span><span class="word-char">R</span><span class="word-char">E</span><span class="word-char">A</span><span class="word-char">T</span><span class="word-char">I</span><span class="word-char">V</span><span class="word-char">E</span>
-              </span>
-              <span class="line line-2" id="hero-title-developer">
-                <span class="word-char accent-serif">D</span><span class="word-char">E</span><span class="word-char">V</span><span class="word-char accent-orange">E</span><span class="word-char">L</span><span class="word-char">O</span><span class="word-char">P</span><span class="word-char">E</span><span class="word-char">R</span><span class="accent-period">.</span>
-              </span>
-            </h1>
-
-            <!-- Floating Vector Handles Box on Hero Title -->
-            <div class="hero-title-bounding-box" aria-hidden="true">
-              <div class="anchor-point ap-tl"></div>
-              <div class="anchor-point ap-tc"></div>
-              <div class="anchor-point ap-tr"></div>
-              <div class="anchor-point ap-ml"></div>
-              <div class="anchor-point ap-mr"></div>
-              <div class="anchor-point ap-bl"></div>
-              <div class="anchor-point ap-bc"></div>
-              <div class="anchor-point ap-br"></div>
-              <div class="box-tag">TYPE: Archivo Black + Instrument Serif [Display]</div>
-            </div>
-          </div>
-
-          <!-- Hero Subtitle & CTA Actions -->
-          <div class="hero-bottom-grid">
-            <div class="hero-sub-text">
-              <p class="hero-desc">
-                I build intelligent products, meaningful interfaces, and digital experiences that turn complex ideas into reality.
-              </p>
-              <div class="hero-specs-list">
-                <span class="spec-tag"><i data-lucide="check"></i> Next-Gen AI Platforms</span>
-                <span class="spec-tag"><i data-lucide="check"></i> Scalable Microservices</span>
-                <span class="spec-tag"><i data-lucide="check"></i> Editorial Interaction Design</span>
-              </div>
-            </div>
-
-            <div class="hero-actions">
-              <a href="#projects" class="btn-primary magnetic-btn" id="hero-btn-work">
-                <span class="btn-text">Explore My Work</span>
-                <span class="btn-icon"><i data-lucide="arrow-down-right"></i></span>
-                <span class="btn-bounding-box"></span>
-              </a>
-              <a href="#about" class="btn-secondary magnetic-btn" id="hero-btn-about">
-                <span class="btn-text">About Me</span>
-                <span class="btn-icon"><i data-lucide="user"></i></span>
-              </a>
-            </div>
-          </div>
-
-          <!-- Floating Decorative Toolbars & Bezier Vectors -->
-          <div class="hero-floating-badge badge-top-right" aria-hidden="true">
-            <div class="badge-title">VECTOR INSPECT</div>
-            <div class="badge-data">BEZIER TANGENT: 45.8°</div>
-            <div class="badge-data">COLOR: #F15A29 [CMYK 0/78/90/0]</div>
-          </div>
-
-          <div class="hero-floating-badge badge-bottom-left" aria-hidden="true">
-            <div class="badge-title">STATUS: ACTIVE</div>
-            <div class="badge-data">BUILDING INTELLIGENT SYSTEMS</div>
-            <div class="badge-data">OPEN FOR COLLABORATION</div>
+          <div class="sub-col sub-right">
+            <a href="#work" class="explore-pill magnetic" data-magnetic>
+              <span class="pill-dot"></span>
+              <span class="pill-text">INITIALIZE ARCHIVE</span>
+              <span class="pill-arrow">↓</span>
+            </a>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator Prompt -->
-      <a href="#about" class="scroll-prompt" aria-label="Scroll down to About section">
-        <span class="scroll-label">SCROLL TO INSPECT</span>
+      <!-- HERO SCROLL INDICATOR -->
+      <div class="hero-scroll-indicator" aria-hidden="true">
         <div class="scroll-mouse">
-          <span class="scroll-wheel"></span>
+          <div class="scroll-wheel"></div>
         </div>
-      </a>
-    </section>
-
-
-    <!-- 02. ABOUT ME SECTION -->
-    <section id="about" class="about-section" aria-label="About Me — Behind The Code">
-      <div class="section-container">
-        <!-- Section Header Bar -->
-        <div class="editorial-header-bar">
-          <span class="section-num">01 / 05</span>
-          <span class="section-category">BIOGRAPHY &amp; CAPABILITIES</span>
-          <span class="section-guide-line"></span>
-          <span class="section-artboard-tag">ARTBOARD: ABOUT_ME</span>
-        </div>
-
-        <div class="about-editorial-grid">
-          <!-- Left Column: Oversized Typography & Bio Story -->
-          <div class="about-left-col">
-            <div class="about-headline-wrap">
-              <h2 class="about-headline">
-                <span class="title-row">BEHIND</span>
-                <span class="title-row accent-outline">THE CODE<span class="text-orange">.</span></span>
-              </h2>
-              <!-- Dynamic dimension arrow SVG -->
-              <svg class="dimension-arrow-svg" viewBox="0 0 320 28" fill="none" aria-hidden="true">
-                <line x1="5" y1="14" x2="315" y2="14" stroke="#F15A29" stroke-width="1.5"/>
-                <polygon points="5,14 14,9 14,19" fill="#F15A29"/>
-                <polygon points="315,14 306,9 306,19" fill="#F15A29"/>
-                <rect x="110" y="2" width="100" height="24" fill="#171717" stroke="#F15A29" stroke-width="1"/>
-                <text x="160" y="18" fill="#F15A29" font-family="'JetBrains Mono', monospace" font-size="11" text-anchor="middle">SPAN: 100%</text>
-              </svg>
-            </div>
-
-            <!-- Bio Narrative (Driven by centralized data object in script.js) -->
-            <div class="about-narrative" id="about-bio-text">
-              <!-- Dynamically populated / fallback semantic content -->
-              <p class="lead-bio">
-                I am a <strong>Computer Science &amp; Business Systems undergraduate</strong> bridging the space between algorithmic intelligence, modern full-stack architecture, and creative visual engineering.
-              </p>
-              <p class="body-bio">
-                My passion lies in crafting resilient software that solves tangible human challenges: from <em>AI-powered career re-entry platforms</em> and <em>empathetic conversational companions</em> to <em>community-driven sustainability action networks</em>.
-              </p>
-              <p class="body-bio">
-                I look at code the way a master designer looks at a canvas: every component must possess structural integrity, purposeful aesthetics, and seamless user empathy.
-              </p>
-            </div>
-
-            <!-- Quick Profile Matrix Data -->
-            <div class="profile-matrix">
-              <div class="matrix-item">
-                <span class="m-label">EDUCATION</span>
-                <span class="m-val" id="about-degree">B.Tech in CS &amp; Business Systems</span>
-              </div>
-              <div class="matrix-item">
-                <span class="m-label">CORE FOCUS</span>
-                <span class="m-val">AI Systems, Full-Stack &amp; Human-Centric UI</span>
-              </div>
-              <div class="matrix-item">
-                <span class="m-label">ORIENTATION</span>
-                <span class="m-val">Product Engineer &amp; Creative Technologist</span>
-              </div>
-              <div class="matrix-item">
-                <span class="m-label">WORK STATUS</span>
-                <span class="m-val"><span class="dot-live"></span> Available for Internships &amp; Roles</span>
-              </div>
-            </div>
-
-            <!-- Download Action -->
-            <div class="about-actions">
-              <a href="assets/resume.pdf" target="_blank" download class="btn-primary magnetic-btn">
-                <span class="btn-text">Download Curriculum Vitae</span>
-                <span class="btn-icon"><i data-lucide="download"></i></span>
-              </a>
-              <a href="#contact" class="btn-link">
-                Initiate Conversation &rarr;
-              </a>
-            </div>
-          </div>
-
-          <!-- Right Column: Interactive Portrait in Adobe Vector Bounding Box -->
-          <div class="about-right-col">
-            <div class="portrait-artboard-wrap" id="portrait-card">
-              <!-- Illustrator Bounding Box with Selection Handles -->
-              <div class="vector-bounding-box" aria-hidden="true">
-                <!-- Anchor points -->
-                <div class="anchor-point ap-tl" title="Anchor Point (TL)"></div>
-                <div class="anchor-point ap-tc" title="Anchor Point (TC)"></div>
-                <div class="anchor-point ap-tr" title="Anchor Point (TR)"></div>
-                <div class="anchor-point ap-ml" title="Anchor Point (ML)"></div>
-                <div class="anchor-point ap-mr" title="Anchor Point (MR)"></div>
-                <div class="anchor-point ap-bl" title="Anchor Point (BL)"></div>
-                <div class="anchor-point ap-bc" title="Anchor Point (BC)"></div>
-                <div class="anchor-point ap-br" title="Anchor Point (BR)"></div>
-                
-                <!-- Rotation Pin at Top Center -->
-                <div class="rotate-stem"></div>
-                <div class="rotate-handle" title="Rotate Handle (0.0°)"></div>
-
-                <!-- Bounding Box Dimensions Badge -->
-                <div class="box-dimension-tag">W: 460px &times; H: 580px [Scale 1.0]</div>
-              </div>
-
-              <!-- Portrait Frame -->
-              <div class="portrait-image-frame">
-                <div class="portrait-overlay-grid"></div>
-                <!-- User's Real Photograph -->
-                <img src="assets/portrait.jpg" alt="Creative Developer &amp; Systems Engineer Portrait" class="portrait-img" id="about-portrait-img" loading="lazy">
-                
-                <!-- Editorial Image Tag Caption -->
-                <div class="portrait-caption-tag">
-                  <span class="tag-title">DEVELOPER / BUILDER / CREATOR</span>
-                  <span class="tag-sub">SYS_ID: 2026.PORTFOLIO.DEV</span>
-                </div>
-              </div>
-
-              <!-- Floating Adobe Style Floating Info Chips -->
-              <div class="portrait-chip chip-1">
-                <span class="chip-dot"></span>
-                <span>AI ENGINEERING</span>
-              </div>
-              <div class="portrait-chip chip-2">
-                <span class="chip-dot"></span>
-                <span>FULL-STACK ARCHITECTURE</span>
-              </div>
-              <div class="portrait-chip chip-3">
-                <span class="chip-dot"></span>
-                <span>CREATIVE CODING</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <span class="scroll-text">SCROLL TO OPERATE // 01</span>
       </div>
     </section>
 
 
-    <!-- 03. PROJECT SHOWCASE SECTION -->
-    <section id="projects" class="projects-section" aria-label="Selected Projects Showcase">
-      <div class="section-container">
-        <!-- Section Header Bar -->
-        <div class="editorial-header-bar">
-          <span class="section-num">02 / 05</span>
-          <span class="section-category">PRODUCTION WORK &amp; SYSTEM PROTOTYPES</span>
-          <span class="section-guide-line"></span>
-          <span class="section-artboard-tag">WINDOW: SELECTED_WORK</span>
+    <!-- ============================================================== -->
+    <!-- SECTION 2: WORK — INTERACTIVE RETRO HANDHELD CONSOLE          -->
+    <!-- ============================================================== -->
+    <section class="section-work" id="work">
+      
+      <!-- WORK SECTION HEADER -->
+      <div class="work-header-wrap">
+        <div class="section-meta-strip">
+          <span class="pixel-badge">[ FEATURED REPOSITORY ]</span>
+          <span class="meta-line"></span>
+          <span class="meta-code">SEC.02 // 04_PROJECTS_LOADED</span>
         </div>
-
-        <div class="projects-title-row">
-          <div class="title-left">
-            <h2 class="section-main-heading">
-              SELECTED WORK<span class="text-orange">.</span>
-            </h2>
-            <p class="section-sub-heading">
-              Engineering intelligent products with real-world social impact, cognitive computing, and human empathy.
-            </p>
-          </div>
-          <div class="title-right">
-            <div class="project-count-badge">
-              <span class="count-curr">001</span>
-              <span class="count-divider">—</span>
-              <span class="count-total">004</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Projects Grid / Cards (Creative Window Containers) -->
-        <div class="projects-stack" id="projects-stack">
-
-          <!-- PROJECT 01: GFG (Gap For Good) -->
-          <article class="project-card" data-project="gfg" id="project-01">
-            <div class="project-window-chrome">
-              <div class="chrome-dots">
-                <span class="dot close"></span>
-                <span class="dot min"></span>
-                <span class="dot max"></span>
-              </div>
-              <div class="chrome-title">GFG_CareerComeback.artboard @ 100% (RGB/GPU Preview)</div>
-              <div class="chrome-status"><span class="badge-live">LIVE PLATFORM</span></div>
-            </div>
-
-            <div class="project-card-body">
-              <div class="project-info-side">
-                <div class="project-meta-line">
-                  <span class="project-index">PROJECT 01</span>
-                  <span class="project-tech-pill">AI Career Platform</span>
-                  <span class="project-year">2026</span>
-                </div>
-                <h3 class="project-title">GFG: Gap For Good</h3>
-                <p class="project-desc">
-                  An AI-supported career comeback platform engineered to empower women returning to the workforce after maternity leave, caregiving, and extended career breaks. Features intelligent skill normalization, readiness assessment, and tailored career pathways.
-                </p>
-                <div class="project-tags-list">
-                  <span class="tech-tag">AI Skill Normalizer</span>
-                  <span class="tech-tag">Readiness Engine</span>
-                  <span class="tech-tag">FastAPI</span>
-                  <span class="tech-tag">Next.js / React</span>
-                  <span class="tech-tag">Supabase</span>
-                </div>
-                <div class="project-actions">
-                  <a href="https://gfg-sable.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary magnetic-btn project-link-btn">
-                    <span>Visit Live Website</span>
-                    <i data-lucide="external-link"></i>
-                  </a>
-                  <span class="project-domain">gfg-sable.vercel.app</span>
-                </div>
-              </div>
-
-              <div class="project-visual-side">
-                <a href="https://gfg-sable.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-preview-wrap" aria-label="Visit GFG: Gap For Good Website">
-                  <!-- Vector Graphic Illustration for GFG -->
-                  <div class="project-illustration gfg-visual">
-                    <div class="ill-grid"></div>
-                    <div class="ill-vector-mockup">
-                      <div class="mockup-header">
-                        <span class="mockup-pill">GAP FOR GOOD // AI MATCH</span>
-                        <span class="mockup-tag">READINESS: 94%</span>
-                      </div>
-                      <div class="mockup-curve-wrap">
-                        <svg viewBox="0 0 400 160" class="mockup-svg" fill="none">
-                          <path d="M 20 120 Q 120 140, 200 60 T 380 20" stroke="#F15A29" stroke-width="3" stroke-linecap="round"/>
-                          <circle cx="200" cy="60" r="5" fill="#171717" stroke="#F15A29" stroke-width="2"/>
-                          <circle cx="380" cy="20" r="6" fill="#F15A29"/>
-                          <line x1="200" y1="60" x2="200" y2="150" stroke="#F15A29" stroke-width="1" stroke-dasharray="3 3"/>
-                          <text x="210" y="100" fill="#F15A29" font-family="'JetBrains Mono', monospace" font-size="10">SKILL_RE-ENTRY_POINT</text>
-                        </svg>
-                      </div>
-                      <div class="mockup-cards-row">
-                        <div class="m-card"><span>Maternity &rarr; Tech Lead</span></div>
-                        <div class="m-card"><span>Curated Upskilling Modules</span></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-hover-curtain">
-                    <span class="curtain-label"><i data-lucide="arrow-up-right"></i> VIEW LIVE PLATFORM</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </article>
-
-
-          <!-- PROJECT 02: AURA -->
-          <article class="project-card" data-project="aura" id="project-02">
-            <div class="project-window-chrome">
-              <div class="chrome-dots">
-                <span class="dot close"></span>
-                <span class="dot min"></span>
-                <span class="dot max"></span>
-              </div>
-              <div class="chrome-title">AURA_EmotionalWellness.artboard @ 100% (RGB/GPU Preview)</div>
-              <div class="chrome-status"><span class="badge-live">LIVE PLATFORM</span></div>
-            </div>
-
-            <div class="project-card-body">
-              <div class="project-info-side">
-                <div class="project-meta-line">
-                  <span class="project-index">PROJECT 02</span>
-                  <span class="project-tech-pill">Voice AI &amp; Mental Health</span>
-                  <span class="project-year">2026</span>
-                </div>
-                <h3 class="project-title">AURA</h3>
-                <p class="project-desc">
-                  An AI-powered emotional wellness companion featuring real-time conversational empathy, bi-directional voice interaction, introspective journaling, and cognitive session reflections that adapt dynamically to mental well-being patterns.
-                </p>
-                <div class="project-tags-list">
-                  <span class="tech-tag">Conversational Voice AI</span>
-                  <span class="tech-tag">Sentiment Analysis</span>
-                  <span class="tech-tag">Real-Time Audio API</span>
-                  <span class="tech-tag">Emotional Reflections</span>
-                  <span class="tech-tag">React / Tailwind</span>
-                </div>
-                <div class="project-actions">
-                  <a href="https://aura-umber-eight-10.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary magnetic-btn project-link-btn">
-                    <span>Visit Live Website</span>
-                    <i data-lucide="external-link"></i>
-                  </a>
-                  <span class="project-domain">aura-umber-eight-10.vercel.app</span>
-                </div>
-              </div>
-
-              <div class="project-visual-side">
-                <a href="https://aura-umber-eight-10.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-preview-wrap" aria-label="Visit AURA Emotional Wellness Website">
-                  <!-- Vector Graphic Illustration for AURA -->
-                  <div class="project-illustration aura-visual">
-                    <div class="ill-grid"></div>
-                    <div class="ill-vector-mockup">
-                      <div class="mockup-header">
-                        <span class="mockup-pill">AURA // NEURAL VOICE AGENT</span>
-                        <span class="mockup-tag">STATE: EMPATHETIC LISTENING</span>
-                      </div>
-                      <div class="aura-soundwaves-wrap">
-                        <div class="sound-bar b1"></div>
-                        <div class="sound-bar b2"></div>
-                        <div class="sound-bar b3"></div>
-                        <div class="sound-bar b4"></div>
-                        <div class="sound-bar b5"></div>
-                        <div class="sound-bar b6"></div>
-                        <div class="sound-bar b7"></div>
-                        <div class="sound-bar b8"></div>
-                      </div>
-                      <div class="aura-quote-box">
-                        <span>"Take a slow breath. Let's unpack what you experienced today together."</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-hover-curtain">
-                    <span class="curtain-label"><i data-lucide="arrow-up-right"></i> VIEW LIVE PLATFORM</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </article>
-
-
-          <!-- PROJECT 03: ONE PLANET -->
-          <article class="project-card" data-project="one-planet" id="project-03">
-            <div class="project-window-chrome">
-              <div class="chrome-dots">
-                <span class="dot close"></span>
-                <span class="dot min"></span>
-                <span class="dot max"></span>
-              </div>
-              <div class="chrome-title">ONE_PLANET_SDG_Hub.artboard @ 100% (RGB/GPU Preview)</div>
-              <div class="chrome-status"><span class="badge-live">LIVE PLATFORM</span></div>
-            </div>
-
-            <div class="project-card-body">
-              <div class="project-info-side">
-                <div class="project-meta-line">
-                  <span class="project-index">PROJECT 03</span>
-                  <span class="project-tech-pill">Social Impact &amp; Sustainability</span>
-                  <span class="project-year">2026</span>
-                </div>
-                <h3 class="project-title">ONE PLANET</h3>
-                <p class="project-desc">
-                  An UN Sustainable Development Goals (SDG) action hub enabling grassroots communities to discover hyper-local environmental challenges, crowdsource ecological incident reports, explore verified solutions, and mobilize collective action.
-                </p>
-                <div class="project-tags-list">
-                  <span class="tech-tag">SDG Goal Metrics</span>
-                  <span class="tech-tag">Community Action Hub</span>
-                  <span class="tech-tag">Geo-Incident Reporting</span>
-                  <span class="tech-tag">Full-Stack Cloud</span>
-                </div>
-                <div class="project-actions">
-                  <a href="https://one-planet-nine.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-primary magnetic-btn project-link-btn">
-                    <span>Visit Live Website</span>
-                    <i data-lucide="external-link"></i>
-                  </a>
-                  <span class="project-domain">one-planet-nine.vercel.app</span>
-                </div>
-              </div>
-
-              <div class="project-visual-side">
-                <a href="https://one-planet-nine.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-preview-wrap" aria-label="Visit ONE PLANET Action Hub">
-                  <!-- Vector Graphic Illustration for ONE PLANET -->
-                  <div class="project-illustration planet-visual">
-                    <div class="ill-grid"></div>
-                    <div class="ill-vector-mockup">
-                      <div class="mockup-header">
-                        <span class="mockup-pill">ONE PLANET // SDG ACTION MATRIX</span>
-                        <span class="mockup-tag">GLOBAL GOALS: 17</span>
-                      </div>
-                      <div class="sdg-badges-row">
-                        <span class="sdg-chip c-13">#13 Climate Action</span>
-                        <span class="sdg-chip c-11">#11 Sustainable Cities</span>
-                        <span class="sdg-chip c-5">#5 Gender Equality</span>
-                      </div>
-                      <div class="sdg-map-wireframe">
-                        <svg viewBox="0 0 360 90" fill="none">
-                          <circle cx="80" cy="45" r="18" stroke="#10B981" stroke-width="1.5" stroke-dasharray="2 2"/>
-                          <circle cx="80" cy="45" r="4" fill="#10B981"/>
-                          <line x1="80" y1="45" x2="220" y2="30" stroke="#F15A29" stroke-width="1.5"/>
-                          <circle cx="220" cy="30" r="12" stroke="#F15A29" stroke-width="1.5"/>
-                          <circle cx="220" cy="30" r="3" fill="#F15A29"/>
-                          <line x1="220" y1="30" x2="310" y2="60" stroke="#F15A29" stroke-width="1.5" stroke-dasharray="3 3"/>
-                          <circle cx="310" cy="60" r="8" stroke="#38BDF8" stroke-width="1.5"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-hover-curtain">
-                    <span class="curtain-label"><i data-lucide="arrow-up-right"></i> VIEW LIVE PLATFORM</span>
-                  </div>
-                </a>
-              </div>
-            </div>
-          </article>
-
-
-          <!-- PROJECT 04: AGENT MEMORY SYSTEM (In Development) -->
-          <article class="project-card card-dev" data-project="agent-memory" id="project-04">
-            <div class="project-window-chrome">
-              <div class="chrome-dots">
-                <span class="dot close"></span>
-                <span class="dot min"></span>
-                <span class="dot max"></span>
-              </div>
-              <div class="chrome-title">AGENT_MEMORY_CORE.sys @ 100% (In Development)</div>
-              <div class="chrome-status"><span class="badge-dev">IN DEVELOPMENT</span></div>
-            </div>
-
-            <div class="project-card-body">
-              <div class="project-info-side">
-                <div class="project-meta-line">
-                  <span class="project-index">PROJECT 04</span>
-                  <span class="project-tech-pill">Autonomous AI Systems</span>
-                  <span class="project-year">2026 — ACTIVE</span>
-                </div>
-                <h3 class="project-title">AGENT MEMORY SYSTEM</h3>
-                <p class="project-desc">
-                  An efficient, user-controllable context memory architecture for long-running autonomous AI agents. Engineered to optimize semantic retention, progressive episodic summarization, and vector retrieval across multi-session developer workflows without catastrophic context drift.
-                </p>
-                <div class="project-tags-list">
-                  <span class="tech-tag">Context Compression</span>
-                  <span class="tech-tag">Episodic Memory</span>
-                  <span class="tech-tag">Vector Embeddings</span>
-                  <span class="tech-tag">Python &amp; LangChain</span>
-                  <span class="tech-tag">Autonomous Subagents</span>
-                </div>
-                <div class="project-actions">
-                  <button type="button" class="btn-primary magnetic-btn project-link-btn" id="agent-memory-info-btn">
-                    <span>Architecture Blueprint</span>
-                    <i data-lucide="file-code"></i>
-                  </button>
-                  <span class="project-domain badge-orange-outline">Ongoing Research &amp; Build</span>
-                </div>
-              </div>
-
-              <div class="project-visual-side">
-                <div class="project-preview-wrap dev-preview" tabindex="0" role="region" aria-label="Agent Memory System Architecture Preview">
-                  <!-- Vector Graphic Illustration for AGENT MEMORY -->
-                  <div class="project-illustration memory-visual">
-                    <div class="ill-grid"></div>
-                    <div class="ill-vector-mockup">
-                      <div class="mockup-header">
-                        <span class="mockup-pill">MEMORY HIERARCHY PIPELINE</span>
-                        <span class="mockup-tag">TOKEN EFFICIENCY: +420%</span>
-                      </div>
-                      <div class="memory-nodes-tree">
-                        <div class="mem-node n-root">
-                          <span>WORKING MEMORY BUFFER</span>
-                        </div>
-                        <div class="mem-tree-lines">
-                          <span class="arrow-down">&darr;</span>
-                        </div>
-                        <div class="mem-branches">
-                          <div class="mem-node n-sub"><span>Episodic Log</span></div>
-                          <div class="mem-node n-sub"><span>Semantic Graph</span></div>
-                          <div class="mem-node n-sub"><span>Vector Embeddings</span></div>
-                        </div>
-                      </div>
-                      <div class="mem-footer-tag">
-                        <span>STATUS: ACTIVE PROTOTYPING &amp; BENCHMARKING</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="project-hover-curtain dev-curtain">
-                    <span class="curtain-label"><i data-lucide="cpu"></i> VIEW ARCHITECTURAL DESIGN</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- 04. SKILLS SECTION ("MY CREATIVE TOOLKIT.") -->
-    <section id="skills" class="skills-section" aria-label="Technical Skills and Creative Toolkit">
-      <div class="section-container">
-        <!-- Section Header Bar -->
-        <div class="editorial-header-bar">
-          <span class="section-num">03 / 05</span>
-          <span class="section-category">TECHNICAL CAPABILITIES &amp; ARCHITECTURAL TOOLS</span>
-          <span class="section-guide-line"></span>
-          <span class="section-artboard-tag">PALETTE: TOOLKIT_SWATCHES</span>
-        </div>
-
-        <div class="skills-heading-wrap">
-          <h2 class="section-main-heading">
-            MY CREATIVE TOOLKIT<span class="text-orange">.</span>
-          </h2>
-          <p class="section-sub-heading">
-            Layered components, verified technical toolchains, and computational frameworks used across production environments.
-          </p>
-        </div>
-
-        <!-- Filter Tabs / Layer Switcher -->
-        <div class="skills-category-filter" role="tablist" aria-label="Skills categories">
-          <button class="filter-chip active" role="tab" aria-selected="true" data-category="all">All Layers (21)</button>
-          <button class="filter-chip" role="tab" aria-selected="false" data-category="frontend">Frontend &amp; UI</button>
-          <button class="filter-chip" role="tab" aria-selected="false" data-category="backend">Backend &amp; APIs</button>
-          <button class="filter-chip" role="tab" aria-selected="false" data-category="database">Databases &amp; Cloud</button>
-          <button class="filter-chip" role="tab" aria-selected="false" data-category="ai">AI &amp; Data Science</button>
-          <button class="filter-chip" role="tab" aria-selected="false" data-category="tools">Dev Tools &amp; Workflow</button>
-        </div>
-
-        <!-- Skills Swatches Matrix (Draggable / Layered Workspace Cards) -->
-        <div class="skills-swatch-grid" id="skills-grid">
-
-          <!-- FRONTEND CATEGORY -->
-          <div class="skill-tile" data-category="frontend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#F15A29;"></span>
-              <span class="tile-category">FRONTEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">HTML5</h3>
-              <p class="skill-desc">Semantic markup, accessibility compliance (WCAG), and modern DOM structures.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">STRUCTURE</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="frontend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#38BDF8;"></span>
-              <span class="tile-category">FRONTEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">CSS3 / Vanilla CSS</h3>
-              <p class="skill-desc">Complex grid systems, container queries, CSS variables, and GPU keyframe animations.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">STYLING</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="frontend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#F59E0B;"></span>
-              <span class="tile-category">FRONTEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">JavaScript (ES6+)</h3>
-              <p class="skill-desc">Asynchronous programming, Web APIs, DOM manipulation, and state management.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">CORE LOGIC</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="frontend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#06B6D4;"></span>
-              <span class="tile-category">FRONTEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">React.js</h3>
-              <p class="skill-desc">Component-driven architecture, custom hooks, virtual DOM optimization, and SSR ecosystems.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">UI FRAMEWORK</span>
-            </div>
-          </div>
-
-          <!-- BACKEND CATEGORY -->
-          <div class="skill-tile" data-category="backend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#3B82F6;"></span>
-              <span class="tile-category">BACKEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Python</h3>
-              <p class="skill-desc">FastAPI microservices, asynchronous request pipelines, scientific packages, and automation.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">BACKEND CORE</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="backend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#EF4444;"></span>
-              <span class="tile-category">BACKEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Java</h3>
-              <p class="skill-desc">Object-oriented paradigms, concurrency management, data structures, and enterprise systems.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">ENTERPRISE CORE</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="backend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#10B981;"></span>
-              <span class="tile-category">BACKEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Spring Boot</h3>
-              <p class="skill-desc">Enterprise microservices, dependency injection, Spring Security, and transactional persistence.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">FRAMEWORK</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="backend">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#8B5CF6;"></span>
-              <span class="tile-category">BACKEND</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">RESTful APIs</h3>
-              <p class="skill-desc">Idempotent endpoint design, token authentication, rate limiting, and OpenAPI specifications.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">PROTOCOLS</span>
-            </div>
-          </div>
-
-          <!-- DATABASE CATEGORY -->
-          <div class="skill-tile" data-category="database">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#0284C7;"></span>
-              <span class="tile-category">DATABASE</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">MySQL</h3>
-              <p class="skill-desc">Relational schema normalization, complex SQL joins, indexing, and ACID transactions.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">RDBMS</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="database">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#334155;"></span>
-              <span class="tile-category">DATABASE</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">PostgreSQL</h3>
-              <p class="skill-desc">Advanced relational modeling, JSONB query operators, and vector search with pgvector.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">RDBMS / VECTOR</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="database">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#3ECF8E;"></span>
-              <span class="tile-category">DATABASE</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Supabase</h3>
-              <p class="skill-desc">Row-level security (RLS), real-time database subscriptions, and auth integration.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">CLOUD PLATFORM</span>
-            </div>
-          </div>
-
-          <!-- AI & DATA CATEGORY -->
-          <div class="skill-tile" data-category="ai">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#F15A29;"></span>
-              <span class="tile-category">AI &amp; DATA</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Machine Learning</h3>
-              <p class="skill-desc">Predictive regression, classification pipelines, clustering, model evaluation, and scikit-learn.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">INTELLIGENCE</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="ai">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#E11D48;"></span>
-              <span class="tile-category">AI &amp; DATA</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">AI Integrations</h3>
-              <p class="skill-desc">LLM orchestration, prompt optimization, RAG pipelines, OpenAI, and Gemini API bindings.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">GENERATIVE AI</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="ai">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#6366F1;"></span>
-              <span class="tile-category">AI &amp; DATA</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Data Analysis</h3>
-              <p class="skill-desc">Pandas data manipulation, NumPy vectorized computation, and structured exploratory data pipelines.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">ANALYTICS</span>
-            </div>
-          </div>
-
-          <!-- DEV TOOLS CATEGORY -->
-          <div class="skill-tile" data-category="tools">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#F97316;"></span>
-              <span class="tile-category">TOOLS</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Git &amp; GitHub</h3>
-              <p class="skill-desc">Branching workflows, atomic commit strategies, pull requests, CI/CD, and repository governance.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">VCS</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="tools">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#0284C7;"></span>
-              <span class="tile-category">TOOLS</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">VS Code &amp; Cursor</h3>
-              <p class="skill-desc">AI-augmented pairing, custom extensions, debugging profiling, and multi-file code editing.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">ENVIRONMENT</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="tools">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#8B5CF6;"></span>
-              <span class="tile-category">TOOLS</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Antigravity</h3>
-              <p class="skill-desc">Autonomous multi-agent workflows, tool execution orchestration, and agentic coding patterns.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">AI AGENTIC SDK</span>
-            </div>
-          </div>
-
-          <div class="skill-tile" data-category="tools">
-            <div class="tile-header">
-              <span class="swatch-color" style="background:#FF6C37;"></span>
-              <span class="tile-category">TOOLS</span>
-            </div>
-            <div class="tile-body">
-              <h3 class="skill-name">Postman</h3>
-              <p class="skill-desc">Automated contract testing, mocking server endpoints, environment parameterization, and API docs.</p>
-            </div>
-            <div class="tile-footer">
-              <span class="tag-meta">API TESTING</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-
-    <!-- 05. EXPERIENCE & ACHIEVEMENTS TIMELINE -->
-    <section id="experience" class="experience-section" aria-label="Experience & Milestones">
-      <div class="section-container">
-        <!-- Section Header Bar -->
-        <div class="editorial-header-bar">
-          <span class="section-num">04 / 05</span>
-          <span class="section-category">TRAJECTORY &amp; COMPETITIVE MILESTONES</span>
-          <span class="section-guide-line"></span>
-          <span class="section-artboard-tag">PATH: CAREER_TIMELINE</span>
-        </div>
-
-        <div class="timeline-heading-wrap">
-          <h2 class="section-main-heading">
-            EXPERIENCE &amp; ACHIEVEMENTS<span class="text-orange">.</span>
-          </h2>
-          <p class="section-sub-heading">
-            Key milestones in hackathons, engineering initiatives, and technical projects. All items easily editable via data configuration.
-          </p>
-        </div>
-
-        <!-- Vertically Animated Timeline -->
-        <div class="timeline-container" id="timeline-container">
-          <!-- Central Dynamic Drawing SVG Path -->
-          <div class="timeline-center-line">
-            <div class="timeline-progress-fill" id="timeline-fill"></div>
-          </div>
-
-          <!-- Timeline Items (Alternating Sides) -->
-          <div class="timeline-stream" id="timeline-stream">
-
-            <!-- Item 1: Hackathon & Innovation -->
-            <div class="timeline-item left-item" data-index="1">
-              <div class="timeline-marker">
-                <span class="marker-anchor"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="card-meta">
-                  <span class="card-year">2026 — PRESENT</span>
-                  <span class="card-tag">HACKATHONS &amp; SPRINT BUILDS</span>
-                </div>
-                <h3 class="card-title">National Hackathon Finalist &amp; Innovator</h3>
-                <p class="card-desc">
-                  Collaborated in high-tempo competitive hackathons designing and shipping full-stack prototypes. Spearheaded the architecture for AI-driven solutions addressing real-world community challenges and SDG objectives.
-                </p>
-                <div class="card-chips">
-                  <span class="mini-chip">Fast Prototyping</span>
-                  <span class="mini-chip">Team Leadership</span>
-                  <span class="mini-chip">System Pitching</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item 2: AI Systems & Production Development -->
-            <div class="timeline-item right-item" data-index="2">
-              <div class="timeline-marker">
-                <span class="marker-anchor"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="card-meta">
-                  <span class="card-year">2025 — 2026</span>
-                  <span class="card-tag">AI SYSTEMS ENGINEERING</span>
-                </div>
-                <h3 class="card-title">Lead Developer &mdash; AI Solutions &amp; Platform Architecture</h3>
-                <p class="card-desc">
-                  Architected and deployed production web applications including GFG (career comeback platform) and AURA (voice mental wellness). Implemented scalable cloud backends, API endpoints, and low-latency client state synchronization.
-                </p>
-                <div class="card-chips">
-                  <span class="mini-chip">FastAPI</span>
-                  <span class="mini-chip">React</span>
-                  <span class="mini-chip">Audio Streaming</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item 3: Full-Stack & Student Innovation -->
-            <div class="timeline-item left-item" data-index="3">
-              <div class="timeline-marker">
-                <span class="marker-anchor"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="card-meta">
-                  <span class="card-year">2024 — 2025</span>
-                  <span class="card-tag">ACADEMIC &amp; STUDENT INNOVATION</span>
-                </div>
-                <h3 class="card-title">Undergraduate Researcher &mdash; CS &amp; Business Systems</h3>
-                <p class="card-desc">
-                  Pursuing deep technical foundations in algorithms, enterprise systems, database architectures, and business process modeling. Developed multiple open-source utilities and coordinated tech club developer workshops.
-                </p>
-                <div class="card-chips">
-                  <span class="mini-chip">Algorithms</span>
-                  <span class="mini-chip">DBMS</span>
-                  <span class="mini-chip">Tech Mentorship</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item 4: Technical Certifications & Specializations -->
-            <div class="timeline-item right-item" data-index="4">
-              <div class="timeline-marker">
-                <span class="marker-anchor"></span>
-              </div>
-              <div class="timeline-card">
-                <div class="card-meta">
-                  <span class="card-year">CONTINUOUS</span>
-                  <span class="card-tag">CERTIFICATIONS &amp; KNOWLEDGE</span>
-                </div>
-                <h3 class="card-title">Advanced Computing &amp; Cloud Credentials</h3>
-                <p class="card-desc">
-                  Completed rigorous coursework and professional specializations in Deep Learning, Full-Stack Cloud Architecture, Relational Databases, and Microservices engineering.
-                </p>
-                <div class="card-chips">
-                  <span class="mini-chip">Cloud Architecture</span>
-                  <span class="mini-chip">Machine Learning</span>
-                  <span class="mini-chip">Security Best Practices</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- 06. CONTACT SECTION ("LET'S BUILD SOMETHING EXTRAORDINARY.") -->
-    <section id="contact" class="contact-section" aria-label="Contact and Collaboration">
-      <!-- Background Giant Kinetic Wordmark -->
-      <div class="contact-bg-watermark" aria-hidden="true">
-        <span>CONNECT // COLLABORATE // CREATE // </span>
+        <h2 class="work-section-title">
+          <span class="pixel-heading">SYSTEM_WORK</span>
+          <span class="work-title-sub">RETRO CONSOLE ENGINE</span>
+        </h2>
       </div>
 
-      <div class="section-container">
-        <!-- Section Header Bar -->
-        <div class="editorial-header-bar">
-          <span class="section-num">05 / 05</span>
-          <span class="section-category">INITIATE COLLABORATION &amp; TRANSMISSION</span>
-          <span class="section-guide-line"></span>
-          <span class="section-artboard-tag">CANVAS: FINAL_EXPORT</span>
+      <!-- WORK RETRO CONSOLE 3D STAGE -->
+      <div class="console-stage" id="console-stage">
+        
+        <!-- MASSIVE ABSTRACT WHITE HALFTONE PATTERN BEHIND CONSOLE -->
+        <div class="console-halftone-backdrop" aria-hidden="true">
+          <svg viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="console-ht-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                <circle cx="10" cy="10" r="5" fill="#F5F5F5"/>
+              </pattern>
+              <radialGradient id="console-ht-fade" cx="50%" cy="50%" r="50%">
+                <stop offset="30%" stop-color="#FFFFFF" stop-opacity="1"/>
+                <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+              </radialGradient>
+              <mask id="console-ht-mask">
+                <circle cx="450" cy="450" r="420" fill="url(#console-ht-fade)"/>
+                <!-- Geometric retro cuts -->
+                <line x1="0" y1="450" x2="900" y2="450" stroke="#000000" stroke-width="4"/>
+                <line x1="450" y1="0" x2="450" y2="900" stroke="#000000" stroke-width="4"/>
+                <circle cx="450" cy="450" r="140" fill="#000000"/>
+              </mask>
+            </defs>
+            <circle cx="450" cy="450" r="420" fill="url(#console-ht-pattern)" mask="url(#console-ht-mask)"/>
+            <!-- Surrounding technical radial ticks -->
+            <circle cx="450" cy="450" r="390" stroke="#F5F5F5" stroke-width="1" stroke-dasharray="6 12" opacity="0.3"/>
+            <circle cx="450" cy="450" r="440" stroke="#F5F5F5" stroke-width="1" stroke-dasharray="2 8" opacity="0.15"/>
+          </svg>
         </div>
 
-        <div class="contact-main-grid">
-          <!-- Big Punchy Typography -->
-          <div class="contact-headline-col">
-            <h2 class="contact-headline">
-              <span class="c-line">LET'S BUILD</span>
-              <span class="c-line">SOMETHING</span>
-              <span class="c-line accent-extraordinary">EXTRAORDINARY<span class="text-orange">.</span></span>
-            </h2>
+        <!-- THREE.JS 3D RETRO HANDHELD CONSOLE CANVAS -->
+        <div class="console-canvas-wrap" id="console-canvas-wrap">
+          <canvas id="work-3d-console-canvas" aria-label="3D Retro Handheld Console Device"></canvas>
+          <div class="console-click-hint" id="console-click-hint">
+            <span class="hint-icon">⚡</span>
+            <span class="hint-text">CLICK CONSOLE SCREEN FOR INTEL DOSSIER</span>
+          </div>
+        </div>
 
-            <!-- Vector Connector Line SVG -->
-            <svg class="contact-connector-svg" viewBox="0 0 500 80" fill="none" aria-hidden="true">
-              <path d="M 0 30 Q 150 70, 320 20 T 490 60" stroke="#F15A29" stroke-width="2" stroke-dasharray="4 4"/>
-              <circle cx="490" cy="60" r="5" fill="#F15A29"/>
-            </svg>
+        <!-- RETRO HARDWARE DOCK CONTROLS -->
+        <div class="console-hardware-dock">
+          
+          <div class="dock-row-top">
+            <button id="prev-project" class="dock-btn prev-btn magnetic" data-magnetic aria-label="Previous Project">
+              <span class="dock-btn-icon">◀</span>
+              <span class="dock-btn-label">PREV</span>
+            </button>
 
-            <p class="contact-pitch">
-              Have an ambitious vision, open role, or technical challenge that demands both high-performance software engineering and creative interaction design? Let's talk.
-            </p>
+            <div class="dock-counter-display">
+              <span class="counter-label">INDEX</span>
+              <div class="counter-digits">
+                <span id="current-project-num" class="current-num">01</span>
+                <span class="counter-slash">/</span>
+                <span class="total-num">04</span>
+              </div>
+            </div>
+
+            <button id="next-project" class="dock-btn next-btn magnetic" data-magnetic aria-label="Next Project">
+              <span class="dock-btn-label">NEXT</span>
+              <span class="dock-btn-icon">▶</span>
+            </button>
           </div>
 
-          <!-- Contact Channels & Interaction Pad -->
-          <div class="contact-actions-col">
-            <!-- Copy Email Interactive Card -->
-            <div class="email-action-box" id="email-copy-box" tabindex="0" role="button" aria-label="Click to copy email address">
-              <div class="box-top-tag">
-                <span>PRIMARY TRANSMISSION CHANNEL</span>
-                <span class="copy-status-badge" id="copy-badge"><i data-lucide="copy"></i> Click to Copy</span>
+          <!-- DIRECT PROJECT SELECTOR TABS -->
+          <div class="project-quick-selector" role="tablist" aria-label="Direct Project Selection">
+            <button class="quick-tab active" data-index="0" role="tab" aria-selected="true">
+              <span class="tab-code">01</span>
+              <span class="tab-title">AURA</span>
+            </button>
+            <button class="quick-tab" data-index="1" role="tab" aria-selected="false">
+              <span class="tab-code">02</span>
+              <span class="tab-title">GFG</span>
+            </button>
+            <button class="quick-tab" data-index="2" role="tab" aria-selected="false">
+              <span class="tab-code">03</span>
+              <span class="tab-title">ONE PLANET</span>
+            </button>
+            <button class="quick-tab" data-index="3" role="tab" aria-selected="false">
+              <span class="tab-code">04</span>
+              <span class="tab-title">CAMPUSSYNC</span>
+            </button>
+          </div>
+
+          <!-- ACTIVE PROJECT SUMMARY TELEMETRY CARD -->
+          <div class="project-telemetry-card" id="project-telemetry-card">
+            <div class="telemetry-card-top">
+              <div class="project-title-group">
+                <span class="project-category-badge" id="telemetry-category">EMOTIONAL VOICE AI COMPANION</span>
+                <h3 class="project-active-title" id="telemetry-title">AURA — Personal AI Desktop Assistant</h3>
               </div>
-              <div class="email-display-text" id="contact-email-text">
-                tarunbanurekha@gmail.com
-              </div>
-              <div class="box-hint">
-                <span>Direct response within 24 hours guaranteed.</span>
-              </div>
-            </div>
-
-            <!-- Social Links Matrix -->
-            <div class="contact-links-grid">
-              <!-- GitHub -->
-              <a href="https://github.com/TRB-89" target="_blank" rel="noopener noreferrer" class="contact-social-card" id="contact-link-github">
-                <div class="card-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                </div>
-                <div class="card-details">
-                  <span class="network-name">GitHub</span>
-                  <span class="network-handle">@TRB-89 &rarr;</span>
-                </div>
-              </a>
-
-              <!-- LinkedIn -->
-              <a href="https://www.linkedin.com/in/tarun-r-127503384/" target="_blank" rel="noopener noreferrer" class="contact-social-card" id="contact-link-linkedin">
-                <div class="card-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                </div>
-                <div class="card-details">
-                  <span class="network-name">LinkedIn</span>
-                  <span class="network-handle">in/tarun-r-127503384 &rarr;</span>
-                </div>
-              </a>
-
-              <!-- Resume Download -->
-              <a href="assets/resume.pdf" target="_blank" download class="contact-social-card" id="contact-link-resume">
-                <div class="card-icon"><i data-lucide="file-text"></i></div>
-                <div class="card-details">
-                  <span class="network-name">Curriculum Vitae</span>
-                  <span class="network-handle">Download PDF Resume &rarr;</span>
-                </div>
-              </a>
-
-              <!-- Direct Mail Link -->
-              <a href="mailto:tarunbanurekha@gmail.com" class="contact-social-card" id="contact-link-mailto">
-                <div class="card-icon"><i data-lucide="mail"></i></div>
-                <div class="card-details">
-                  <span class="network-name">Direct Email</span>
-                  <span class="network-handle">tarunbanurekha@gmail.com &rarr;</span>
-                </div>
-              </a>
-            </div>
-
-            <!-- Artboard Reset / Back to Top Button -->
-            <div class="back-to-top-wrap">
-              <button type="button" class="btn-back-to-top" id="back-to-top-btn">
-                <i data-lucide="arrow-up"></i>
-                <span>Reset View to Canvas Origin (Top)</span>
+              <button id="open-dossier-btn" class="dossier-trigger-btn magnetic" data-magnetic>
+                <span>OPEN DOSSIER</span>
+                <span class="btn-arrow">↗</span>
               </button>
             </div>
+
+            <p class="telemetry-desc" id="telemetry-desc">
+              Voice-driven personal intelligence companion featuring streaming neural speech, contextual memory architecture, and multimodal desktop task execution.
+            </p>
+
+            <div class="telemetry-footer">
+              <div class="tech-tags-list" id="telemetry-tags">
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">WebSockets</span>
+                <span class="tech-tag">LLM Orchestration</span>
+                <span class="tech-tag">Voice Synthesis</span>
+                <span class="tech-tag">React</span>
+              </div>
+              
+              <div class="project-action-links" id="telemetry-links">
+                <a href="https://aura-umber-eight-10.vercel.app/" target="_blank" rel="noopener noreferrer" class="link-pill live-pill" id="telemetry-live-link">
+                  <span class="link-dot"></span>
+                  <span>LIVE DEMO</span>
+                </a>
+                <a href="https://github.com/TRB-89" target="_blank" rel="noopener noreferrer" class="link-pill repo-pill" id="telemetry-repo-link">
+                  <span>GITHUB REPO</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- SECTION 3: ABOUT ME — RETRO EDITORIAL SECTION                 -->
+    <!-- ============================================================== -->
+    <section class="section-about" id="about">
+      
+      <!-- ABOUT SECTION HEADER (PIXELATED WHITE HEADING) -->
+      <div class="about-header-wrap">
+        <div class="section-meta-strip">
+          <span class="pixel-badge">[ OPERATOR DOSSIER ]</span>
+          <span class="meta-line"></span>
+          <span class="meta-code">SEC.03 // BIO_AND_CAPABILITIES</span>
+        </div>
+        <h2 class="about-pixel-title">
+          <span class="pixel-heading">ABOUT ME</span>
+        </h2>
+      </div>
+
+      <!-- EDITORIAL ASYMMETRIC GRID -->
+      <div class="about-editorial-grid">
+        
+        <!-- LEFT COLUMN: HIGH-CONTRAST MONOCHROME PORTRAIT + 3D ORBIT -->
+        <div class="about-portrait-col">
+          <div class="portrait-frame">
+            <div class="frame-corner corner-tl">⌜</div>
+            <div class="frame-corner corner-tr">⌝</div>
+            <div class="frame-corner corner-bl">⌞</div>
+            <div class="frame-corner corner-br">⌟</div>
+
+            <div class="portrait-canvas-wrapper">
+              <img src="assets/portrait_y2k.jpg" alt="Tarun R. — Creative Developer & AI Systems Engineer" class="portrait-img monochrome-brutalist" id="portrait-image">
+              <div class="portrait-scanline" aria-hidden="true"></div>
+              <div class="portrait-tag-badge">
+                <span class="tag-status">●</span>
+                <span class="tag-title">SUBJECT: TARUN R. // Y2K ARCHIVE</span>
+              </div>
+            </div>
+
+            <div class="portrait-meta-footer">
+              <span class="mono-label">DISCIPLINE: CS &amp; BUSINESS SYSTEMS</span>
+              <span class="mono-label">FOCUS: AI &amp; DIGITAL EXPERIENCES</span>
+            </div>
+          </div>
+
+          <!-- EMBEDDED THREE.JS 3D CHROME DISC BACKDROP -->
+          <div class="about-3d-disc-container" id="about-3d-disc-container">
+            <canvas id="about-3d-canvas" aria-label="3D Chrome Optical Disc and Gyroscope"></canvas>
           </div>
         </div>
 
-        <!-- Footer Colophon -->
-        <footer class="app-colophon">
-          <div class="colophon-left">
-            <span class="colophon-ai-badge">TR</span>
-            <span class="colophon-text">DESIGNED &amp; ENGINEERED BY TARUN R // ADOBE VECTOR WORKSPACE</span>
+        <!-- RIGHT COLUMN: PROFESSIONAL EDITORIAL BIOGRAPHY & SKILLS -->
+        <div class="about-content-col">
+          
+          <div class="about-statement-box">
+            <div class="statement-intro-tag">
+              <span class="quote-symbol">“</span>
+              <span class="mono-quote-label">BIOGRAPHICAL STATEMENT</span>
+            </div>
+            <blockquote class="editorial-quote">
+              "I'm <strong class="text-highlight">Tarun R.</strong>, a Computer Science and Business Systems student and developer interested in artificial intelligence, full-stack engineering, and building technology that solves meaningful real-world problems.
+              <br><br>
+              I enjoy transforming ambitious ideas into functional applications, experimenting with intelligent systems, and creating digital experiences that combine engineering with design."
+            </blockquote>
           </div>
-          <div class="colophon-center">
-            <span>BUILT WITH SEMANTIC HTML5, MODERN CSS3, VANILLA JS &amp; GSAP</span>
+
+          <!-- ACADEMIC & ARCHITECTURAL SUMMARY -->
+          <div class="editorial-meta-row">
+            <div class="meta-card">
+              <span class="meta-card-label">ACADEMIC FOUNDATION</span>
+              <h4 class="meta-card-title">Computer Science &amp; Business Systems</h4>
+              <p class="meta-card-sub">Engineering rigorous algorithms alongside modern commercial enterprise architectures.</p>
+            </div>
+            <div class="meta-card">
+              <span class="meta-card-label">PRIMARY INTERESTS</span>
+              <h4 class="meta-card-title">Intelligent Systems &amp; 3D Web</h4>
+              <p class="meta-card-sub">Autonomous AI workflows, responsive client-server architectures, and high-fidelity spatial motion.</p>
+            </div>
           </div>
-          <div class="colophon-right">
-            <span>&copy; <span id="current-year">2026</span> ALL RIGHTS RESERVED</span>
+
+          <!-- TECHNICAL SKILLS MATRIX -->
+          <div class="skills-matrix-wrap">
+            <div class="skills-header">
+              <span class="pixel-tag">[ CORE CAPABILITIES ]</span>
+              <span class="skills-header-line"></span>
+              <span class="mono-meta">VERIFIED STACK</span>
+            </div>
+
+            <div class="skills-brutalist-grid">
+              
+              <!-- CATEGORY 1: LANGUAGES & SYSTEM CORE -->
+              <div class="skill-category-block">
+                <div class="cat-header">
+                  <span class="cat-num">01</span>
+                  <span class="cat-name">SYSTEMS &amp; LOGIC</span>
+                </div>
+                <div class="skill-chips-row">
+                  <div class="skill-chip">
+                    <span class="chip-name">Python</span>
+                    <span class="chip-tech">AI / Automation</span>
+                  </div>
+                  <div class="skill-chip">
+                    <span class="chip-name">Java</span>
+                    <span class="chip-tech">Enterprise OOP</span>
+                  </div>
+                  <div class="skill-chip">
+                    <span class="chip-name">Spring Boot</span>
+                    <span class="chip-tech">Microservices</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CATEGORY 2: CLIENT & INTERFACE DESIGN -->
+              <div class="skill-category-block">
+                <div class="cat-header">
+                  <span class="cat-num">02</span>
+                  <span class="cat-name">FRONTEND &amp; SPATIAL</span>
+                </div>
+                <div class="skill-chips-row">
+                  <div class="skill-chip">
+                    <span class="chip-name">React</span>
+                    <span class="chip-tech">Components</span>
+                  </div>
+                  <div class="skill-chip">
+                    <span class="chip-name">JavaScript</span>
+                    <span class="chip-tech">ES6+ / WebGL</span>
+                  </div>
+                  <div class="skill-chip">
+                    <span class="chip-name">HTML5 &amp; CSS3</span>
+                    <span class="chip-tech">Semantic &amp; GSAP</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CATEGORY 3: DATA & INFRASTRUCTURE -->
+              <div class="skill-category-block">
+                <div class="cat-header">
+                  <span class="cat-num">03</span>
+                  <span class="cat-name">DATA &amp; CLOUD</span>
+                </div>
+                <div class="skill-chips-row">
+                  <div class="skill-chip">
+                    <span class="chip-name">MySQL</span>
+                    <span class="chip-tech">Relational RDBMS</span>
+                  </div>
+                  <div class="skill-chip">
+                    <span class="chip-name">Supabase</span>
+                    <span class="chip-tech">PostgreSQL &amp; Auth</span>
+                  </div>
+                  <div class="skill-chip">
+                    <span class="chip-name">RESTful APIs</span>
+                    <span class="chip-tech">System Integration</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
           </div>
-        </footer>
+
+          <!-- RESUME DOWNLOAD CALLOUT -->
+          <div class="about-action-row">
+            <a href="assets/resume.pdf" download="Tarun_R_Resume.pdf" class="resume-download-btn magnetic" data-magnetic>
+              <span class="btn-icon">⬇</span>
+              <span class="btn-text">DOWNLOAD CURRICULUM VITAE (.PDF)</span>
+              <span class="btn-meta">OFFICIAL SPEC // 2026</span>
+            </a>
+          </div>
+
+        </div>
+
       </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- SECTION 4: CONTACT — INTERACTIVE 3D FINALE                    -->
+    <!-- ============================================================== -->
+    <section class="section-contact" id="contact">
+      
+      <!-- TECHNICAL TOP BORDER -->
+      <div class="contact-hud-strip">
+        <span class="pixel-badge">[ COMM LINK INITIATION ]</span>
+        <span class="strip-divider">+</span>
+        <span class="mono-meta">DIRECT ACCESS CHANNELS // READY</span>
+        <span class="strip-divider">+</span>
+        <span class="mono-meta" id="live-time-utc">TIME: UTC+5:30</span>
+      </div>
+
+      <!-- CONTACT HERO CONTAINER WITH 3D CHROME PLAYING CARD / TALISMAN -->
+      <div class="contact-scene-stage">
+        
+        <!-- MASSIVE WHITE LETTERING: CONTACT [3D OBJECT] ME. -->
+        <div class="contact-massive-heading" aria-label="CONTACT ME.">
+          <div class="contact-word contact-left split-char">CONTACT</div>
+          <div class="contact-3d-spacer" id="contact-3d-spacer" aria-hidden="true"></div>
+          <div class="contact-word contact-right split-char">ME.</div>
+        </div>
+
+        <!-- THREE.JS 3D CONTACT CANVAS (CHROME PLAYING CARD / TALISMAN) -->
+        <div class="contact-canvas-wrap" id="contact-canvas-wrap">
+          <canvas id="contact-3d-canvas" aria-label="Interactive 3D Chrome Metallic Playing Card Talisman"></canvas>
+        </div>
+      </div>
+
+      <!-- CONTACT INQUIRY STATEMENT -->
+      <div class="contact-statement-bar">
+        <p class="contact-lead-text">
+          Have an ambitious project, intelligent system idea, or engineering challenge? Let's engineer something memorable together.
+        </p>
+      </div>
+
+      <!-- CLEAN DIRECT INTERACTION CHANNELS -->
+      <div class="contact-channels-grid">
+        
+        <!-- EMAIL -->
+        <a href="mailto:tarunbanurekha@gmail.com" class="channel-card magnetic" data-magnetic>
+          <div class="card-icon-wrap">
+            <span class="channel-num">01</span>
+            <span class="channel-symbol">✉</span>
+          </div>
+          <div class="channel-info">
+            <span class="channel-label">ELECTRONIC MAIL</span>
+            <span class="channel-value">tarunbanurekha@gmail.com</span>
+          </div>
+          <div class="channel-action">
+            <span class="action-arrow">↗</span>
+          </div>
+        </a>
+
+        <!-- GITHUB -->
+        <a href="https://github.com/TRB-89" target="_blank" rel="noopener noreferrer" class="channel-card magnetic" data-magnetic>
+          <div class="card-icon-wrap">
+            <span class="channel-num">02</span>
+            <span class="channel-symbol">⑂</span>
+          </div>
+          <div class="channel-info">
+            <span class="channel-label">SOURCE REPOSITORY</span>
+            <span class="channel-value">github.com/TRB-89</span>
+          </div>
+          <div class="channel-action">
+            <span class="action-arrow">↗</span>
+          </div>
+        </a>
+
+        <!-- LINKEDIN -->
+        <a href="https://www.linkedin.com/in/tarun-r-127503384/" target="_blank" rel="noopener noreferrer" class="channel-card magnetic" data-magnetic>
+          <div class="card-icon-wrap">
+            <span class="channel-num">03</span>
+            <span class="channel-symbol">🔗</span>
+          </div>
+          <div class="channel-info">
+            <span class="channel-label">PROFESSIONAL NETWORK</span>
+            <span class="channel-value">linkedin.com/in/tarun-r</span>
+          </div>
+          <div class="channel-action">
+            <span class="action-arrow">↗</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- GLOBAL FOOTER & SYSTEM TELEMETRY -->
+      <footer class="global-footer">
+        <div class="footer-left">
+          <span class="footer-copy">© 2026 TARUN R. ALL RIGHTS RESERVED.</span>
+          <span class="footer-spec">ENGINEERED WITH THREE.JS, GSAP &amp; LENIS</span>
+        </div>
+        <div class="footer-center">
+          <span class="footer-status-pill">
+            <span class="status-pulse-dot"></span>
+            <span>AVAILABLE FOR SELECT COLLABORATIONS</span>
+          </span>
+        </div>
+        <div class="footer-right">
+          <button id="back-to-top" class="back-to-top-btn magnetic" data-magnetic aria-label="Return to top of page">
+            <span>BACK TO TOP</span>
+            <span class="top-arrow">↑</span>
+          </button>
+        </div>
+      </footer>
+
     </section>
 
   </main>
 
-  <!-- MODAL: AGENT MEMORY BLUEPRINT PREVIEW -->
-  <div id="blueprint-modal" class="blueprint-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: PROJECT DETAIL DOSSIER                                  -->
+  <!-- ============================================================== -->
+  <div id="project-modal" class="project-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-project-title">
     <div class="modal-backdrop" id="modal-backdrop"></div>
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <div class="modal-title-wrap">
-          <span class="modal-chip">PROJECT 04 ARCHITECTURE</span>
-          <h3 id="modal-title">AGENT MEMORY SYSTEM &mdash; Technical Blueprint</h3>
+    <div class="modal-card">
+      <div class="modal-hud-header">
+        <div class="modal-tag-group">
+          <span class="pixel-badge">[ PROJECT INTEL DOSSIER ]</span>
+          <span class="modal-index-badge" id="modal-index-badge">01 // 04</span>
         </div>
-        <button id="modal-close-btn" type="button" class="modal-close" aria-label="Close modal">&times;</button>
+        <button id="modal-close-btn" class="modal-close-btn" aria-label="Close dossier modal">
+          <span>✕ CLOSE [ESC]</span>
+        </button>
       </div>
-      <div class="modal-body">
+
+      <div class="modal-body-scroll">
+        <div class="modal-title-wrap">
+          <span class="modal-category" id="modal-project-category">EMOTIONAL VOICE AI COMPANION</span>
+          <h2 class="modal-title" id="modal-project-title">AURA — Personal AI Desktop Assistant</h2>
+        </div>
+
+        <div class="modal-interactive-preview" id="modal-preview-box">
+          <!-- Dynamic simulated terminal or preview frame -->
+          <div class="preview-terminal">
+            <div class="term-bar">
+              <span class="term-dots">•••</span>
+              <span class="term-title" id="modal-term-title">aura_engine.py // runtime</span>
+              <span class="term-status">ACTIVE</span>
+            </div>
+            <pre class="term-code" id="modal-term-code">
+[INIT] Neural Voice Processing Pipeline... OK
+[LLM] Connecting to low-latency context buffer... STREAMING
+[AUDIO] Synthesizing emotional waveform... 48kHz / 24-bit
+[READY] Awaiting voice directive or desktop command prompt.
+            </pre>
+          </div>
+        </div>
+
         <div class="modal-section">
-          <h4>Problem Statement</h4>
-          <p>
-            Autonomous AI coding agents suffer from catastrophic context overflow and loss of instructions across long multi-hour sessions. Traditional fixed context windows truncate critical setup information and previous architectural decisions.
+          <h4 class="modal-section-title">SYSTEM ARCHITECTURE &amp; OVERVIEW</h4>
+          <p class="modal-desc" id="modal-project-long-desc">
+            A voice-driven intelligent desktop companion designed with real-time neural speech recognition and emotional synthesis. Features a persistent memory engine that tracks context across multiple conversational sessions and dispatches local automation routines.
           </p>
         </div>
+
         <div class="modal-section">
-          <h4>Engineered Solution</h4>
-          <p>
-            A multi-tiered hierarchical memory architecture featuring:
-          </p>
-          <ul class="blueprint-features">
-            <li><strong>Working Context Buffer:</strong> Active execution scratchpad with automated token budget governor.</li>
-            <li><strong>Episodic Log Compactor:</strong> Rolling summarization that extracts key decisions into structured JSON schema without losing parameter states.</li>
-            <li><strong>Vector Semantic Retrieval:</strong> Sub-agent on-demand query engine using dense embeddings to retrieve past conversation facts only when referenced.</li>
+          <h4 class="modal-section-title">KEY ENGINEERING INNOVATIONS</h4>
+          <ul class="modal-bullet-list" id="modal-project-bullets">
+            <li>Low-latency bidirectional streaming via WebSockets.</li>
+            <li>Dynamic emotion modulation based on acoustic feature analysis.</li>
+            <li>Custom desktop workflow automation bindings.</li>
           </ul>
         </div>
-        <div class="modal-section code-block-wrap">
-          <h4>Memory Pipeline Schema</h4>
-          <pre class="code-block"><code>class AgentMemoryPipeline:
-    def __init__(self, token_budget=8192):
-        self.working_buffer = SlidingWindowBuffer(limit=token_budget)
-        self.episodic_summarizer = SemanticCompactor()
-        self.vector_store = ChromaVectorIndex()
 
-    async def ingest_turn(self, agent_message):
-        if self.working_buffer.exceeds_threshold():
-            compacted_summary = await self.episodic_summarizer.summarize(self.working_buffer)
-            self.vector_store.embed(compacted_summary)
-            self.working_buffer.prune_retaining_invariants()</code></pre>
+        <div class="modal-section">
+          <h4 class="modal-section-title">TECHNOLOGY STACK</h4>
+          <div class="modal-tags-grid" id="modal-project-stack">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">WebSockets</span>
+            <span class="tech-tag">React</span>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <span class="modal-meta">Status: In Active Research &amp; Prototyping</span>
-        <button type="button" class="btn-primary" id="modal-ack-btn">Close Blueprint</button>
+
+        <div class="modal-actions-strip">
+          <a href="#" target="_blank" rel="noopener noreferrer" class="modal-action-btn live-btn" id="modal-live-btn">
+            <span class="btn-dot"></span>
+            <span>LAUNCH LIVE SYSTEM</span>
+            <span class="btn-icon">↗</span>
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="modal-action-btn repo-btn" id="modal-repo-btn">
+            <span>INSPECT SOURCE CODE</span>
+            <span class="btn-icon">⑂</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toast-notification" class="toast-notification" role="status" aria-live="polite">
-    <span class="toast-icon"><i data-lucide="check-circle-2"></i></span>
-    <span class="toast-message" id="toast-text">Email copied to clipboard!</span>
-  </div>
-
-  <!-- Main JavaScript File -->
+  <!-- APPLICATION LOGIC & THREE.JS ENGINE SCRIPT -->
   <script src="script.js"></script>
 </body>
 </html>

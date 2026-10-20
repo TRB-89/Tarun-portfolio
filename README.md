@@ -1,44 +1,46 @@
-# Tarun-portfolio
+# TARUN R. — CREATIVE DEVELOPER & AI SYSTEMS ENGINEER
 
-> **Tarun R — Creative Developer & AI Systems Engineer**  
-> An Adobe Illustrator-inspired interactive portfolio designed inside a living vector-design application workspace.
+> **Experimental Y2K × Monochrome Brutalism × Retro-Futurism × Chrome 3D × Editorial Minimalism**  
+> An award-winning developer portfolio showcasing artificial intelligence systems, full-stack architectures, and spatial 3D web experiences.
 
-[![Live Platform](https://img.shields.io/badge/Website-Live_Preview-orange?style=for-the-badge&logo=googlechrome)](http://localhost:3000)
-[![Tech Stack](https://img.shields.io/badge/Tech-HTML5_|_CSS3_|_JavaScript_|_GSAP-blue?style=for-the-badge)](https://developer.mozilla.org/)
+[![Live Platform](https://img.shields.io/badge/Website-Portfolio_2026-black?style=for-the-badge&logo=googlechrome)](http://localhost:3000)
+[![Tech Stack](https://img.shields.io/badge/Tech-HTML5_|_CSS3_|_JavaScript_|_Three.js_|_GSAP_|_Lenis-white?style=for-the-badge)](https://developer.mozilla.org/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 ---
 
-## 🎨 Creative Direction & Aesthetic
+## 🎨 Creative Direction & Aesthetic Matrix
 
-Inspired by creative design software (Adobe Illustrator), this portfolio represents an original editorial workspace that fuses code, interactive motion, and graphic design:
+Inspired by the fusion of Y2K retro-futurism, brutalist editorial print design, and modern real-time WebGL:
 
-- **Vector Workspace Layout:** Floating tools palette, top application menu strip, live artboard rulers, dimension guides, and transform properties inspector.
-- **Editorial Typography:** Bold oversized titles (`Space Grotesk`, `Archivo Black`), combined with expressive serif accents (`Instrument Serif`) and clean readable body type (`Inter`).
-- **Interactive Pen Tool Engine:** Active drawing canvas that lets visitors draw interactive Bézier paths with real-time vector anchor handles.
-- **Dynamic Vector Cursors:** Custom pointer states (Arrow, Crosshair, Pen) with live coordinate tracker (`X`, `Y`) and mode indicators.
-- **Sound Synthesizer UI:** Subtle, optional Web Audio API interaction tones toggled directly from the View menu.
+- **Monochrome Brutalism:** High-contrast pitch-black `#050505` background, pure white typography, metallic chrome reflections, and fine hairline grid coordinates.
+- **Hero 3D Chrome Dice:** Real-time Three.js physical transmission dice with procedural studio lighting, die pips, and pointer momentum physics floating over editorial typography: `tarun [3D OBJECT] r.`.
+- **Work 3D Retro Handheld Console:** Custom procedural 3D handheld gaming console featuring an interactive dynamic CRT scanline screen that displays real project previews, animated telemetry waveforms, tactile D-Pad/button controls, and CRT glitch transitions.
+- **Editorial About Section:** Pixelated header typography (`Silkscreen`), professional biographical statement, technical skills matrix, and high-contrast brutalist portrait.
+- **Contact 3D Finale:** Massive typographic framing `CONTACT [3D OBJECT] ME.` centered around a floating 3D chrome playing card talisman with embedded circuit traces.
+- **Cinematic Interactions:** Native Web Audio API sound synthesizer, Lenis smooth scrolling synchronized with GSAP ScrollTrigger, magnetic cursor, and an instant black/white INVERT theme toggle.
 
 ---
 
-## 🚀 Featured Projects
+## 🚀 Featured Software Projects
 
-| Project | Category | Status | Live Link |
+| Project | Category | Tech Stack | Status / Links |
 | :--- | :--- | :--- | :--- |
-| **01. GFG: Gap For Good** | AI Career Comeback Platform | Live | [gfg-sable.vercel.app](https://gfg-sable.vercel.app/) |
-| **02. AURA** | Emotional Voice AI Companion | Live | [aura-umber-eight-10.vercel.app](https://aura-umber-eight-10.vercel.app/) |
-| **03. ONE PLANET** | SDG Action & Community Hub | Live | [one-planet-nine.vercel.app](https://one-planet-nine.vercel.app/) |
-| **04. Agent Memory System** | Autonomous AI Context Engine | In Development | Technical Blueprint in Portfolio |
+| **01. AURA** | Emotional Voice AI Companion | Python, WebSockets, LLM Orchestration, Voice Synthesis, React | [Live System](https://aura-umber-eight-10.vercel.app/) • [GitHub](https://github.com/TRB-89) |
+| **02. GFG: Gap For Good** | AI Career Re-entry Platform | React, Next.js, AI Scoring Models, Supabase, Tailwind/CSS | [Live System](https://gfg-sable.vercel.app/) • [GitHub](https://github.com/TRB-89) |
+| **03. ONE PLANET** | SDG Action & Community Hub | Full-Stack JavaScript, Supabase, Geospatial APIs, REST | [Live System](https://one-planet-nine.vercel.app/) • [GitHub](https://github.com/TRB-89) |
+| **04. CampusSync** | Smart Academic Operating System | Java, Spring Boot, MySQL, React, RESTful APIs | [GitHub Repository](https://github.com/TRB-89) |
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
 - **Markup & Structure:** Semantic HTML5, accessible ARIA roles, WCAG compliance.
-- **Styling:** Modern CSS3, CSS Custom Properties (Variables), Grid & Flexbox, GPU-accelerated keyframe transforms.
-- **Logic & Interactions:** Vanilla JavaScript (ES6+), Web Audio API, Clipboard API.
-- **Motion & Scroll Triggers:** [GSAP 3](https://greensock.com/gsap/) and [ScrollTrigger](https://greensock.com/scrolltrigger/).
-- **Icons & Graphics:** Custom inline SVGs and [Lucide Icons](https://lucide.dev/).
+- **Styling:** Vanilla CSS3, CSS Custom Properties, Responsive Grid, CRT scanline filters, SVG noise overlay.
+- **3D Graphics & Shaders:** [Three.js r128](https://threejs.org/) (Physical & Standard materials, procedural textures, dynamic lights, raycasting).
+- **Smooth Motion & Scroll:** [Lenis](https://lenis.darkroom.engineering/) + [GSAP 3](https://greensock.com/gsap/) + [ScrollTrigger](https://greensock.com/scrolltrigger/).
+- **Audio Synthesis:** Native Web Audio API (real-time synthesized ambient drone and tactile feedback blips).
+- **Typography:** Instrument Serif (Editorial Italic), Space Grotesk (Brutalist Sans), Silkscreen (Pixel), JetBrains Mono (Technical).
 
 ---
 
@@ -47,29 +49,27 @@ Inspired by creative design software (Adobe Illustrator), this portfolio represe
 ```
 Tarun-portfolio/
 ├── assets/
-│   ├── portrait.jpg      # High-resolution portfolio portrait
-│   └── resume.pdf        # Downloadable curriculum vitae
-├── index.html            # Main HTML structure and artboard layouts
-├── style.css             # Design system, workspace styles, and animations
-├── script.js             # Interactions, tools palette, GSAP timelines, and config
-└── README.md             # Project documentation
+│   ├── portrait.jpg      # High-contrast portrait
+│   ├── portrait.png      # Transparent source portrait
+│   └── resume.pdf        # Official curriculum vitae
+├── index.html            # Core HTML structure, SVG halftone stars, HUD & modals
+├── style.css             # Monochrome brutalist design system & responsive layout
+├── script.js             # Three.js 3D scenes (Dice, Console, Disc, Card), Lenis, GSAP, Web Audio
+└── README.md             # Documentation
 ```
 
 ---
 
-## 💻 Local Development
+## 💻 Local Preview & Verification
 
-Run the portfolio locally using any static file server:
+Run the portfolio locally with any local static HTTP server:
 
 ```bash
-# Using Python
-python -m http.server 3000
-
 # Using Node.js (npx serve)
-npx serve -l 3000
+npx -y serve -l 3000
 
-# Using VS Code Live Server
-# Right click index.html -> Open with Live Server
+# Using Python 3
+python -m http.server 3000
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
