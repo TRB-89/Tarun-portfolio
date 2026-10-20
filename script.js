@@ -314,7 +314,81 @@
   }
 
   // =========================================================================
-  // 05. THREE.JS SCENE 1: HERO (TRANSPARENT CHROME GLASS 3D DICE)
+  // STUDIO ENVIRONMENT MAP GENERATOR (CINEMATIC OPIUM HIGH-CONTRAST CHROME)
+  // =========================================================================
+  function createStudioEnvironmentMap(renderer) {
+    if (!renderer || typeof THREE.PMREMGenerator === 'undefined') return null;
+    const pmremGenerator = new THREE.PMREMGenerator(renderer);
+    pmremGenerator.compileEquirectangularShader();
+
+    const envCanvas = document.createElement('canvas');
+    envCanvas.width = 1024;
+    envCanvas.height = 512;
+    const ctx = envCanvas.getContext('2d');
+
+    // Deep pitch black studio base (#020203)
+    ctx.fillStyle = '#020203';
+    ctx.fillRect(0, 0, 1024, 512);
+
+    // Subtle dark horizon gradient
+    const horizon = ctx.createLinearGradient(0, 140, 0, 370);
+    horizon.addColorStop(0, '#010102');
+    horizon.addColorStop(0.5, '#0b0d10');
+    horizon.addColorStop(1, '#010102');
+    ctx.fillStyle = horizon;
+    ctx.fillRect(0, 140, 1024, 230);
+
+    // Overhead Key Softbox (Intense pure white with soft glow)
+    const topGlow = ctx.createRadialGradient(512, 110, 10, 512, 110, 240);
+    topGlow.addColorStop(0, '#ffffff');
+    topGlow.addColorStop(0.35, 'rgba(255, 255, 255, 0.98)');
+    topGlow.addColorStop(0.75, 'rgba(225, 235, 250, 0.45)');
+    topGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = topGlow;
+    ctx.fillRect(240, 0, 544, 260);
+
+    // Sharp overhead softbox strip
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(380, 60, 264, 45);
+
+    // Left vertical high-contrast strip light (razor-sharp chrome highlight)
+    const leftGlow = ctx.createLinearGradient(120, 0, 260, 0);
+    leftGlow.addColorStop(0, 'rgba(0,0,0,0)');
+    leftGlow.addColorStop(0.5, 'rgba(255,255,255,0.95)');
+    leftGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = leftGlow;
+    ctx.fillRect(120, 80, 140, 340);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(180, 100, 16, 300);
+
+    // Right vertical high-contrast strip light
+    const rightGlow = ctx.createLinearGradient(760, 0, 900, 0);
+    rightGlow.addColorStop(0, 'rgba(0,0,0,0)');
+    rightGlow.addColorStop(0.5, 'rgba(240,245,255,0.9)');
+    rightGlow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = rightGlow;
+    ctx.fillRect(760, 90, 140, 320);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(825, 110, 14, 280);
+
+    // Bottom rim bounce
+    const botGlow = ctx.createRadialGradient(512, 460, 10, 512, 460, 170);
+    botGlow.addColorStop(0, 'rgba(215, 225, 240, 0.55)');
+    botGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = botGlow;
+    ctx.fillRect(340, 360, 344, 150);
+
+    const envTex = new THREE.CanvasTexture(envCanvas);
+    const renderTarget = pmremGenerator.fromEquirectangular(envTex);
+    envTex.dispose();
+    pmremGenerator.dispose();
+    return renderTarget.texture;
+  }
+
+  // =========================================================================
+  // 05. THREE.JS SCENE 1: HERO (REALISTIC POLISHED SILVER CHROME 3D DICE)
   // =========================================================================
   function initHeroScene() {
     const canvas = document.getElementById('hero-3d-canvas');
@@ -334,63 +408,106 @@
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    // Studio Environment Map for Physically Accurate Metallic Reflections
+    const studioEnv = createStudioEnvironmentMap(renderer);
+    if (studioEnv) {
+      scene.environment = studioEnv;
+    }
+
+    // Cinematic Studio Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
-    keyLight.position.set(5, 8, 6);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
+    keyLight.position.set(6, 8, 7);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xd1d5db, 1.2);
-    rimLight.position.set(-6, -4, -4);
+    const rimLight = new THREE.DirectionalLight(0xdbe3ed, 1.8);
+    rimLight.position.set(-7, -4, -5);
     scene.add(rimLight);
 
-    const fillLight = new THREE.PointLight(0xffffff, 1.5, 20);
-    fillLight.position.set(0, 0, 5);
+    const fillLight = new THREE.PointLight(0xffffff, 2.0, 25);
+    fillLight.position.set(0, 2, 6);
     scene.add(fillLight);
 
     // Create 3D Dice Assembly
     const diceGroup = new THREE.Group();
     scene.add(diceGroup);
 
-    // Procedural Dice Pip Material & Face Texture Generator
+    // Procedural Dice Face Texture (Polished Silver Chrome Plate + Glossy Black Chrome Pips #101010)
     function createDiceFaceTexture(dots) {
       const tc = document.createElement('canvas');
       tc.width = 512;
       tc.height = 512;
       const ctx = tc.getContext('2d');
 
-      // Chrome glass metallic base
+      // Polished Silver Chrome Liquid Base
       const grad = ctx.createLinearGradient(0, 0, 512, 512);
-      grad.addColorStop(0, '#f5f5f5');
-      grad.addColorStop(0.3, '#d8d8d8');
-      grad.addColorStop(0.7, '#efefef');
-      grad.addColorStop(1, '#a6a6a6');
+      grad.addColorStop(0, '#f2f5f9');
+      grad.addColorStop(0.25, '#dbe2ec');
+      grad.addColorStop(0.5, '#ffffff');
+      grad.addColorStop(0.75, '#c5ccd6');
+      grad.addColorStop(1, '#e2e7ef');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 512, 512);
 
-      // Fine chrome border hairline
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.lineWidth = 12;
-      ctx.strokeRect(16, 16, 480, 480);
+      // Fine chrome edge bevel highlight
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.lineWidth = 14;
+      ctx.strokeRect(10, 10, 492, 492);
 
-      // Inner subtle circuit grid
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+      // Inner hairline specular reflection
+      ctx.strokeStyle = 'rgba(160, 170, 185, 0.45)';
       ctx.lineWidth = 2;
+      ctx.strokeRect(22, 22, 468, 468);
+
+      // Subtle technical coordinates hairline
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(256, 32); ctx.lineTo(256, 480);
-      ctx.moveTo(32, 256); ctx.lineTo(480, 256);
+      ctx.moveTo(256, 28); ctx.lineTo(256, 484);
+      ctx.moveTo(28, 256); ctx.lineTo(484, 256);
       ctx.stroke();
 
-      // Draw Pips (Inset dark metallic dice dots)
-      ctx.fillStyle = '#0a0a0a';
+      // Draw Pips (Glossy Black Chrome #101010 with subtle metallic reflection & high-contrast silver rim)
       const drawPip = (x, y) => {
+        // 1. Inset bevel outer ring - razor-sharp white-silver specular rim highlight
+        ctx.beginPath();
+        ctx.arc(x, y, 40, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.fill();
+
+        // 2. Inset groove shadow (creates 3D recessed depth)
+        ctx.beginPath();
+        ctx.arc(x, y, 38, 0, Math.PI * 2);
+        ctx.fillStyle = '#050505';
+        ctx.fill();
+
+        // 3. Glossy black chrome body (#101010)
         ctx.beginPath();
         ctx.arc(x, y, 36, 0, Math.PI * 2);
+        const pipGrad = ctx.createRadialGradient(x - 10, y - 10, 2, x, y, 36);
+        pipGrad.addColorStop(0, '#262626'); // subtle specular hotspot
+        pipGrad.addColorStop(0.35, '#101010'); // glossy black chrome body (#101010)
+        pipGrad.addColorStop(1, '#080808'); // dark rim
+        ctx.fillStyle = pipGrad;
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
-        ctx.lineWidth = 4;
+
+        // 4. Subtle metallic reflection crescent (physically accurate glossy highlight)
+        ctx.beginPath();
+        ctx.arc(x - 9, y - 9, 14, 0, Math.PI * 2);
+        const specGrad = ctx.createRadialGradient(x - 9, y - 9, 1, x - 9, y - 9, 14);
+        specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.55)');
+        specGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.2)');
+        specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = specGrad;
+        ctx.fill();
+
+        // 5. Razor-sharp subtle rim stroke
+        ctx.beginPath();
+        ctx.arc(x, y, 36, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       };
 
@@ -412,26 +529,41 @@
       return tex;
     }
 
+    // Realistic Polished Silver Chrome Materials with High Gloss & Environmental Reflections
+    const createChromeMaterial = (dots) => new THREE.MeshPhysicalMaterial({
+      map: createDiceFaceTexture(dots),
+      roughness: 0.02,
+      metalness: 1.0,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.03,
+      reflectivity: 1.0,
+      envMap: studioEnv,
+      envMapIntensity: 1.8
+    });
+
     // Materials for the 6 faces (Right=1, Left=6, Top=2, Bottom=5, Front=3, Back=4)
     const diceMaterials = [
-      new THREE.MeshPhysicalMaterial({ map: createDiceFaceTexture(1), roughness: 0.1, metalness: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.08 }),
-      new THREE.MeshPhysicalMaterial({ map: createDiceFaceTexture(6), roughness: 0.1, metalness: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.08 }),
-      new THREE.MeshPhysicalMaterial({ map: createDiceFaceTexture(2), roughness: 0.1, metalness: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.08 }),
-      new THREE.MeshPhysicalMaterial({ map: createDiceFaceTexture(5), roughness: 0.1, metalness: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.08 }),
-      new THREE.MeshPhysicalMaterial({ map: createDiceFaceTexture(3), roughness: 0.1, metalness: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.08 }),
-      new THREE.MeshPhysicalMaterial({ map: createDiceFaceTexture(4), roughness: 0.1, metalness: 0.88, clearcoat: 1.0, clearcoatRoughness: 0.08 }),
+      createChromeMaterial(1),
+      createChromeMaterial(6),
+      createChromeMaterial(2),
+      createChromeMaterial(5),
+      createChromeMaterial(3),
+      createChromeMaterial(4),
     ];
 
     const diceGeometry = new THREE.BoxGeometry(2.3, 2.3, 2.3, 2, 2, 2);
     const diceMesh = new THREE.Mesh(diceGeometry, diceMaterials);
     diceGroup.add(diceMesh);
 
-    // Inner Chrome Core Sphere for extra refraction depth
+    // Inner Polished Chrome Core Sphere for internal reflections
     const coreGeo = new THREE.SphereGeometry(0.85, 32, 32);
-    const coreMat = new THREE.MeshStandardMaterial({
+    const coreMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
-      metalness: 0.95,
-      roughness: 0.05
+      metalness: 1.0,
+      roughness: 0.02,
+      clearcoat: 1.0,
+      envMap: studioEnv,
+      envMapIntensity: 1.6
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     diceGroup.add(coreMesh);
@@ -1003,47 +1135,53 @@
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    // Studio Environment Map for High-Gloss Metallic Card Reflections
+    const contactEnv = createStudioEnvironmentMap(renderer);
+    if (contactEnv) {
+      scene.environment = contactEnv;
+    }
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    keyLight.position.set(4, 5, 6);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
+    keyLight.position.set(5, 6, 7);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xd1d5db, 1.4);
-    rimLight.position.set(-5, -4, -4);
+    const rimLight = new THREE.DirectionalLight(0xdbe3ed, 1.6);
+    rimLight.position.set(-6, -4, -4);
     scene.add(rimLight);
 
     const cardGroup = new THREE.Group();
     scene.add(cardGroup);
 
-    // Procedural Ace of Spades & Circuit Art Canvas
-    function createCardTexture() {
+    // Procedural Ace of Spades Card Face (Deep Black Card with Pure White #FFFFFF Spade)
+    function createCardFrontTexture() {
       const tc = document.createElement('canvas');
       tc.width = 512;
       tc.height = 768;
       const ctx = tc.getContext('2d');
 
-      // Chrome metallic gradient plate
+      // Deep Pitch Black Luxury Card Plate (#050505 / #08080a)
       const grad = ctx.createLinearGradient(0, 0, 512, 768);
-      grad.addColorStop(0, '#ffffff');
-      grad.addColorStop(0.3, '#d4d4d4');
-      grad.addColorStop(0.7, '#f0f0f0');
-      grad.addColorStop(1, '#9e9e9e');
+      grad.addColorStop(0, '#090a0c');
+      grad.addColorStop(0.4, '#040405');
+      grad.addColorStop(0.7, '#07080a');
+      grad.addColorStop(1, '#020203');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 512, 768);
 
-      // Fine hairline borders
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
-      ctx.lineWidth = 10;
-      ctx.strokeRect(24, 24, 464, 720);
+      // Fine chrome hairline borders
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(20, 20, 472, 728);
 
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(36, 36, 440, 696);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(32, 32, 448, 704);
 
-      // Corner Aces & Spades
-      ctx.fillStyle = '#050505';
+      // Corner Aces & Spades in Pure White (#FFFFFF)
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 44px "Space Grotesk", sans-serif';
       ctx.fillText('A', 50, 80);
       ctx.fillText('♠', 50, 124);
@@ -1055,53 +1193,142 @@
       ctx.fillText('♠', 50, 124);
       ctx.restore();
 
-      // Center Massive Spade Icon with Circuitry & Tarun Monogram
-      ctx.fillStyle = '#050505';
+      // Center Massive Spade Symbol in PURE WHITE (#FFFFFF)
+      ctx.fillStyle = '#FFFFFF';
       ctx.beginPath();
-      // Stylized Spade
-      ctx.moveTo(256, 240);
-      ctx.bezierCurveTo(200, 310, 140, 370, 140, 440);
-      ctx.bezierCurveTo(140, 510, 210, 540, 256, 490);
-      ctx.bezierCurveTo(302, 540, 372, 510, 372, 440);
-      ctx.bezierCurveTo(372, 370, 312, 310, 256, 240);
+      // Stylized Crisp Vector Spade
+      ctx.moveTo(256, 230);
+      ctx.bezierCurveTo(195, 305, 130, 370, 130, 445);
+      ctx.bezierCurveTo(130, 520, 205, 550, 256, 495);
+      ctx.bezierCurveTo(307, 550, 382, 520, 382, 445);
+      ctx.bezierCurveTo(382, 370, 317, 305, 256, 230);
       ctx.fill();
 
-      // Spade stem
+      // Spade stem in PURE WHITE (#FFFFFF)
       ctx.beginPath();
-      ctx.moveTo(256, 480);
-      ctx.lineTo(210, 550);
-      ctx.lineTo(302, 550);
+      ctx.moveTo(256, 485);
+      ctx.lineTo(205, 560);
+      ctx.lineTo(307, 560);
       ctx.closePath();
       ctx.fill();
 
-      // Circuit tracks across card
-      ctx.strokeStyle = '#050505';
+      // Circuit tracks across card in high-contrast crisp silver-white
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
       ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.moveTo(60, 384); ctx.lineTo(130, 384); ctx.lineTo(170, 340);
-      ctx.moveTo(452, 384); ctx.lineTo(382, 384); ctx.lineTo(342, 428);
+      ctx.moveTo(56, 384); ctx.lineTo(130, 384); ctx.lineTo(170, 340);
+      ctx.moveTo(456, 384); ctx.lineTo(382, 384); ctx.lineTo(342, 428);
       ctx.stroke();
 
-      // Tarun Monogram Inset
-      ctx.fillStyle = '#f5f5f5';
+      // Node terminals
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(56, 384, 4, 0, Math.PI * 2);
+      ctx.arc(456, 384, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // High-contrast Monogram Inset inside the Pure White Spade
+      ctx.fillStyle = '#050505';
       ctx.font = 'bold 22px "Silkscreen", monospace';
       ctx.textAlign = 'center';
-      ctx.fillText('TR // 2026', 256, 430);
+      ctx.fillText('TR // 2026', 256, 435);
 
       const tex = new THREE.CanvasTexture(tc);
       tex.needsUpdate = true;
       return tex;
     }
 
-    const cardTex = createCardTexture();
+    // Procedural Card Back Texture (Opium Brutalist Starburst on Obsidian Plate)
+    function createCardBackTexture() {
+      const tc = document.createElement('canvas');
+      tc.width = 512;
+      tc.height = 768;
+      const ctx = tc.getContext('2d');
+
+      // Deep Black Base Plate
+      ctx.fillStyle = '#040405';
+      ctx.fillRect(0, 0, 512, 768);
+
+      // Chrome Hairline Borders
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+      ctx.lineWidth = 8;
+      ctx.strokeRect(20, 20, 472, 728);
+
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(32, 32, 448, 704);
+
+      // Geometric Crosshair Matrix & 4-Point Star in Pure White (#FFFFFF)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(256, 80); ctx.lineTo(256, 688);
+      ctx.moveTo(60, 384); ctx.lineTo(452, 384);
+      ctx.stroke();
+
+      // Center Starburst
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.moveTo(256, 300);
+      ctx.bezierCurveTo(256, 360, 256, 360, 340, 384);
+      ctx.bezierCurveTo(256, 384, 256, 384, 256, 468);
+      ctx.bezierCurveTo(256, 408, 256, 408, 172, 384);
+      ctx.bezierCurveTo(256, 384, 256, 384, 256, 300);
+      ctx.fill();
+
+      // Micro Technical Labels
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.font = '11px "Silkscreen", monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('ARCHIVE // SPEC-2026', 256, 520);
+      ctx.fillText('CHROME OPIUM TALISMAN', 256, 540);
+
+      const tex = new THREE.CanvasTexture(tc);
+      tex.needsUpdate = true;
+      return tex;
+    }
+
+    const cardFrontTex = createCardFrontTexture();
+    const cardBackTex = createCardBackTexture();
     const cardGeo = new THREE.BoxGeometry(2.0, 3.0, 0.04);
-    const cardMat = new THREE.MeshStandardMaterial({
-      map: cardTex,
-      metalness: 0.95,
-      roughness: 0.1
+
+    // Polished Silver Chrome Edge Material
+    const edgeMat = new THREE.MeshPhysicalMaterial({
+      color: 0xffffff,
+      metalness: 1.0,
+      roughness: 0.03,
+      clearcoat: 1.0,
+      envMap: contactEnv,
+      envMapIntensity: 1.6
     });
 
-    const cardMesh = new THREE.Mesh(cardGeo, cardMat);
+    // High-Gloss Obsidian Card Face Material with Pure White Spade (#FFFFFF)
+    const frontMat = new THREE.MeshPhysicalMaterial({
+      map: cardFrontTex,
+      metalness: 0.9,
+      roughness: 0.06,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.03,
+      reflectivity: 1.0,
+      envMap: contactEnv,
+      envMapIntensity: 1.4
+    });
+
+    // High-Gloss Obsidian Card Back Material
+    const backMat = new THREE.MeshPhysicalMaterial({
+      map: cardBackTex,
+      metalness: 0.9,
+      roughness: 0.06,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.03,
+      reflectivity: 1.0,
+      envMap: contactEnv,
+      envMapIntensity: 1.4
+    });
+
+    // BoxGeometry face order: +X, -X, +Y, -Y, +Z (Front), -Z (Back)
+    const cardMaterials = [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat];
+    const cardMesh = new THREE.Mesh(cardGeo, cardMaterials);
     cardGroup.add(cardMesh);
 
     // Mouse tilt tracking
