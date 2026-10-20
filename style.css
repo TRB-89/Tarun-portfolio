@@ -497,6 +497,48 @@ body.theme-invert .halftone-star {
   color: var(--border-strong);
 }
 
+/* Cinematic Atmospheric Background Watermark Behind 3D Dice */
+.hero-bg-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+.watermark-text {
+  font-family: var(--font-display), var(--font-brutalist);
+  font-weight: 800;
+  font-size: clamp(4.5rem, 15vw, 17rem);
+  line-height: 0.82;
+  letter-spacing: clamp(0.18em, 2.4vw, 0.42em);
+  text-transform: uppercase;
+  color: transparent;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.02) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.055);
+  filter: blur(0.5px);
+  white-space: nowrap;
+  transition: opacity 0.4s ease;
+}
+
+body.theme-invert .watermark-text {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.075) 0%, rgba(0, 0, 0, 0.02) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.055);
+}
+
 /* Three.js 3D Hero Canvas Container */
 .hero-canvas-container {
   position: absolute;

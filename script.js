@@ -587,6 +587,13 @@
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
+    // Atmospheric Background Watermark Element
+    const watermarkEl = document.getElementById('hero-bg-watermark');
+    let targetWatermarkX = 0;
+    let targetWatermarkY = 0;
+    let watermarkCurX = 0;
+    let watermarkCurY = 0;
+
     // Mouse Interaction
     let targetRotX = 0.4;
     let targetRotY = 0.6;
@@ -598,6 +605,10 @@
       mouseNormY = -(e.clientY / window.innerHeight) * 2 + 1;
       targetRotY = mouseNormX * 1.2;
       targetRotX = -mouseNormY * 0.9;
+
+      // Subtle atmospheric parallax on the background watermark
+      targetWatermarkX = mouseNormX * -14;
+      targetWatermarkY = mouseNormY * -10;
     });
 
     // Resize Handler
@@ -623,6 +634,11 @@
           diceGroup.position.z = -self.progress * 3.5;
           diceGroup.rotation.x = self.progress * Math.PI * 1.5;
           diceGroup.rotation.y = self.progress * Math.PI * 1.2;
+
+          // Subtle watermark scroll opacity fade
+          if (watermarkEl) {
+            watermarkEl.style.opacity = Math.max(0, 1 - self.progress * 1.6);
+          }
         }
       });
     }
@@ -649,6 +665,13 @@
       diceGroup.rotation.x += (targetRotX - diceGroup.rotation.x) * 0.05;
       diceGroup.rotation.y += (targetRotY - diceGroup.rotation.y) * 0.05;
       diceGroup.position.y = Math.sin(elapsed * 1.2) * 0.12;
+
+      // Subtle parallax lerp for background watermark
+      if (watermarkEl) {
+        watermarkCurX += (targetWatermarkX - watermarkCurX) * 0.04;
+        watermarkCurY += (targetWatermarkY - watermarkCurY) * 0.04;
+        watermarkEl.style.transform = `translate(calc(-50% + ${watermarkCurX.toFixed(2)}px), calc(-50% + ${watermarkCurY.toFixed(2)}px))`;
+      }
 
       particles.rotation.y = elapsed * 0.02;
 
@@ -1617,6 +1640,13 @@
       filter: 'blur(10px)',
       duration: 1.2
     }, '-=1.0');
+
+    heroTl.from('.hero-bg-watermark', {
+      opacity: 0,
+      scale: 0.94,
+      duration: 1.6,
+      ease: 'power3.out'
+    }, '-=0.8');
 
     heroTl.from('.hero-sub-bar', {
       opacity: 0,
